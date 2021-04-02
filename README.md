@@ -34,10 +34,31 @@ Helper scripts for us during development, for things like initialising the datab
     - Extra points for verification
  - Animations demonstrating exercise
 
+# Pages
+ - Landing page
+    - Registration/login form
+    - About the app
+ - Home page
+    - Scoreboards
+    - Teams
+ - Settings page
+    - Notification management
+    - Exercise categories
+ - Exercise popup
+    - Name of exercise
+    - Description/image/video
+    - Timer
+    - Tick/cross button
+
+# Mentor Feedback
+ - Social interaction
+ - Holding people accountable
+ - Add ideas in video
+
 # Todo
  - [ ] Service worker
-   - [ ] Offline functionality
    - [ ] Push notifications
+   - [ ] Offline functionality
    - [ ] Updates
  - [ ] Account management
  - [ ] Random exercise notification
