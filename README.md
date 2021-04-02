@@ -17,3 +17,11 @@
  - Photo evidence of activity (selfie)
     - Extra points for verification
  - Animations demonstrating exercise
+
+# Todo
+ - [ ] Account management
+ - [ ] Random exercise notification
+ - [ ] Points
+ - [ ] Notification management
+ - [ ] Scoreboards
+ - [ ] Teams
