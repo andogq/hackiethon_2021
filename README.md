@@ -35,6 +35,10 @@ Helper scripts for us during development, for things like initialising the datab
  - Animations demonstrating exercise
 
 # Todo
+ - [ ] Service worker
+   - [ ] Offline functionality
+   - [ ] Push notifications
+   - [ ] Updates
  - [ ] Account management
  - [ ] Random exercise notification
  - [ ] Points
