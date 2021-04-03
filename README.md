@@ -75,3 +75,4 @@ Helper scripts for us during development, for things like initialising the datab
 
 # Notes
  - Few things to not commit by accident: `node_modules` folder, any log files `*.log` and most importantly `service_account.json` (pretty much a password to certain parts of your Google account, be careful)
+ - There seems to be a bug with the firestore and auth emulators, where `request.auth` is always null. To work around this, remove any firestore rules that require authentication for the emulator, or do all testing on the production version.

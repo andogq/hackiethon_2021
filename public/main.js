@@ -1,6 +1,9 @@
 import * as dom from "/js/dom.js";
 
+let db;
 let exercises = [];
+let preferences = {};
+let notification_timer;
 
 function trigger_exercise() {
     if (exercises.length > 0) {
@@ -17,8 +20,24 @@ function update_user_name() {
     }
 }
 
+function start_timer() {
+    // Stop the old notification
+    if (notification_timer) clearInterval(notification_timer);
+
+    // Begin the timer for the new notification
+    console.log(`Starting timer for ${preferences.notification_interval} mins`);
+    if (preferences.notification_interval) notification_timer = setInterval(() => {
+        navigator.serviceWorker.controller.postMessage({
+            command: "notify",
+            parameters: {
+                title: "Exercise time"
+            }
+        });
+    }, preferences.notification_interval * 60 * 1000);
+}
+
 function init() {
-    const db = firebase.firestore();
+    db = firebase.firestore();
 
     let promises = [];
 
@@ -66,8 +85,28 @@ function init() {
         let email = dom.el.form_account_details.elements["email"].value;
         let password = dom.el.form_account_details.elements["password"].value;
     
-        firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
+        firebase.auth().createUserWithEmailAndPassword(email, password).then(({user}) => {
             console.log("Registered and signed in successfully");
+
+            // Create preferences for that user
+            preferences = {
+                notification_interval: 5,
+                notification_hours: [
+                    {start: 9 * 60 * 60 * 1000, end: 11 * 60 * 60 * 1000},
+                    {start: 12 * 60 * 60 * 1000, end: 15 * 60 * 60 * 1000},
+                    {start: 16 * 60 * 60 * 1000, end: 17 * 60 * 60 * 1000},
+                ],
+                notification_days: [0, 1, 2, 3, 4],
+                exclude_exercise: [
+                    "star_jump"
+                ]
+            };
+
+            if (user) db.collection("users").doc(user.uid).set(preferences).then(() => {
+                console.log("Successfully created user preferences");
+            }).catch(e => {
+                console.error(e);
+            });
         }).catch(error => {
             console.error(error);
         });
@@ -129,22 +168,23 @@ document.addEventListener("DOMContentLoaded", () => {
         
                 update_user_name();
 
+                // Load user data
+                let doc_ref = db.collection("users").doc(user.uid);
+                doc_ref.get().then((doc) => {
+                    if (doc.exists) {
+                        preferences = doc.data();
+                        console.log("Successfully loaded user preferences");
+
+                        start_timer();
+                    } else console.error("Problem loading user preferences")
+                }).catch(console.error);
+
                 // If at /trigger_exercise, trigger an exercise then reset back to root
                 if (location.pathname == "/trigger_exercise") {
                     trigger_exercise();
 
                     history.replaceState(null, "", "/");
                 }
-
-                // Begin the timer for the notification
-                setInterval(() => {
-                    navigator.serviceWorker.controller.postMessage({
-                        command: "notify",
-                        parameters: {
-                            title: "Exercise time"
-                        }
-                    });
-                }, 5 * 60 * 1000);
             } else {
                 console.log("User signed out");
 
