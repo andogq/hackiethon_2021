@@ -40,6 +40,8 @@ self.addEventListener("activate", () => {
     commands.log("Service worker activated");
 
     setInterval(trigger_exercise, 5 * 60 * 1000);
+
+    commands.notify({title: "Test notification", description: "yeah woo"});
 });
 
 // Service worker receives a message from the web page
@@ -51,4 +53,35 @@ self.addEventListener("message", e => {
             commands[command](parameters);
         }
     }
+});
+
+self.addEventListener("notificationclick", (e) => {
+    // Close notification
+    e.notification.close();
+    
+    // Hold the event until something is opened
+    e.waitUntil(clients.matchAll({type: "window"}).then(clients => {
+        let p = Promise.resolve();
+        let opened_client = false;
+
+        // Try find an open window
+        for (let client of clients) {
+            if ("focus" in client) {
+                p = client.focus();
+                opened_client = true;
+
+                client.postMessage({
+                    command: "trigger_exercise"
+                });
+                break;
+            }
+        }
+
+        // No open window, so create one
+        if (!opened_client && self.clients.openWindow) {
+            p = self.clients.openWindow('/trigger_exercise');
+        }
+
+        return p;
+    }));
 });
