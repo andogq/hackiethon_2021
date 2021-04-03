@@ -60,7 +60,7 @@ Helper scripts for us during development, for things like initialising the datab
    - [x] Push notifications
    - [ ] Offline functionality
    - [x] Updates
- - [ ] Account management
+ - [x] Account management
  - [ ] Random exercise notification
  - [ ] Points
  - [ ] Notification management
