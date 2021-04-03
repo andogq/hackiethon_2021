@@ -59,7 +59,7 @@ Helper scripts for us during development, for things like initialising the datab
  - [ ] Service worker
    - [x] Push notifications
    - [ ] Offline functionality
-   - [ ] Updates
+   - [x] Updates
  - [ ] Account management
  - [ ] Random exercise notification
  - [ ] Points
