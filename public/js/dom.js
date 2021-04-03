@@ -2,11 +2,11 @@
 let el = {};
 [
     "container_output",
-    "container_signed_in",
-    "container_signed_out",
+    "container_sign_in",
+    "container_account_manager",
     "container_alert",
 
-    "form_account",
+    "form_account_details",
     "form_update_profile",
 
     "button_register",

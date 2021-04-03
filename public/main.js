@@ -64,21 +64,21 @@ function init() {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             console.log("User signed in");
-            dom.show("container_signed_in");
-            dom.hide("container_signed_out");
+            dom.hide("container_sign_in");
+            dom.show("container_account_manager");
     
             update_user_name();
         } else {
             console.log("User signed out");
-            dom.show("container_signed_out");
-            dom.hide("container_signed_in");
+            dom.show("container_sign_in");
+            dom.hide("container_account_manager");
         }
     });
     
     // Event listners attached to different elements
     dom.el.button_register.addEventListener("click", () => {
-        let email = dom.el.form_account.elements["email"].value;
-        let password = dom.el.form_account.elements["password"].value;
+        let email = dom.el.form_account_details.elements["email"].value;
+        let password = dom.el.form_account_details.elements["password"].value;
     
         firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
             console.log("Registered and signed in successfully");
@@ -88,8 +88,8 @@ function init() {
     });
     
     dom.el.button_sign_in.addEventListener("click", () => {
-        let email = dom.el.form_account.elements["email"].value;
-        let password = dom.el.form_account.elements["password"].value;
+        let email = dom.el.form_account_details.elements["email"].value;
+        let password = dom.el.form_account_details.elements["password"].value;
     
         firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
             console.log("Signed in successfully");

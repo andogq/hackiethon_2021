@@ -7,23 +7,22 @@
 <body>
     <div id="container_output"></div>
 
-    <div id="account_manager">
-        <div id="container_signed_out" style="display: none">
-            <form id="form_account">
-                <input type="text" name="email" placeholder="Email" value="test@test.com"/>
-                <input type="password" name="password" placeholder="Password" value="blahblah"/>
-            </form>
-            <button id="button_register">Register</button>
-            <button id="button_sign_in">Sign In</button>
-        </div>
-        <div id="container_signed_in" style="display: none">
-            <h3>Welcome <span id="span_name"></span></h3>
-            <form id="form_update_profile">
-                <input type="text" name="name" placeholder="Name">
-            </form>
-            <button id="button_update_profile">Update Profile</button>
-            <button id="button_sign_out">Sign Out</button>
-        </div>
+    <div id="container_sign_in">
+        <form id="form_account_details">
+            <input type="text" name="email" placeholder="Email" value="test@test.com"/>
+            <input type="password" name="password" placeholder="Password" value="blahblah"/>
+        </form>
+        <button id="button_register">Register</button>
+        <button id="button_sign_in">Sign In</button>
+    </div>
+
+    <div id="container_account_manager">
+        <h3>Welcome <span id="span_name"></span></h3>
+        <form id="form_update_profile">
+            <input type="text" name="name" placeholder="Name">
+        </form>
+        <button id="button_update_profile">Update Profile</button>
+        <button id="button_sign_out">Sign Out</button>
     </div>
 
     <div id="container_alert"></div>
