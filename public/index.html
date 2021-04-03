@@ -6,8 +6,23 @@
 </head>
 <body>
     <div id="output"></div>
+
+    <div id="account_manager">
+        <div id="signed_out" style="display: none">
+            <form id="account">
+                <input type="text" name="email" placeholder="Email" value="test@test.com"/>
+                <input type="password" name="password" placeholder="Password" value="blahblah"/>
+            </form>
+            <button id="register">Register</button>
+            <button id="sign_in">Sign In</button>
+        </div>
+        <div id="signed_in" style="display: none">
+            <button id="sign_out">Sign Out</button>
+        </div>
+    </div>
     
     <script src="/__/firebase/8.3.2/firebase-app.js"></script>
+    <script src="/__/firebase/8.3.2/firebase-auth.js"></script>
     <script src="/__/firebase/8.3.2/firebase-firestore.js"></script>
     <!-- Change for production -->
     <script src="/__/firebase/init.js?useEmulator=true"></script>
