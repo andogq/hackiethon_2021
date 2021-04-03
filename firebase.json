@@ -7,7 +7,8 @@
     "predeploy": [
       "npm --prefix \"$RESOURCE_DIR\" run lint",
       "npm --prefix \"$RESOURCE_DIR\" run build"
-    ]
+    ],
+    "source": "functions"
   },
   "hosting": {
     "public": "public",
@@ -34,8 +35,10 @@
       "port": 5000
     },
     "ui": {
-      "enabled": true,
-      "port": 5002
+      "enabled": true
+    },
+    "auth": {
+      "port": 9099
     }
   }
 }
