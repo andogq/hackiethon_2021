@@ -57,7 +57,7 @@ Helper scripts for us during development, for things like initialising the datab
 
 # Todo
  - [ ] Service worker
-   - [ ] Push notifications
+   - [x] Push notifications
    - [ ] Offline functionality
    - [ ] Updates
  - [ ] Account management
