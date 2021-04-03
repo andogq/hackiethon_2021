@@ -5,24 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <div id="output"></div>
+    <div id="container_output"></div>
 
     <div id="account_manager">
-        <div id="signed_out" style="display: none">
-            <form id="account">
+        <div id="container_signed_out" style="display: none">
+            <form id="form_account">
                 <input type="text" name="email" placeholder="Email" value="test@test.com"/>
                 <input type="password" name="password" placeholder="Password" value="blahblah"/>
             </form>
-            <button id="register">Register</button>
-            <button id="sign_in">Sign In</button>
+            <button id="button_register">Register</button>
+            <button id="button_sign_in">Sign In</button>
         </div>
-        <div id="signed_in" style="display: none">
-            <h3>Welcome <span id="user_name"></span></h3>
-            <form id="update_profile">
+        <div id="container_signed_in" style="display: none">
+            <h3>Welcome <span id="span_name"></span></h3>
+            <form id="form_update_profile">
                 <input type="text" name="name" placeholder="Name">
             </form>
-            <button id="update_profile_button">Update Profile</button>
-            <button id="sign_out">Sign Out</button>
+            <button id="button_update_profile">Update Profile</button>
+            <button id="button_sign_out">Sign Out</button>
         </div>
     </div>
     
@@ -32,6 +32,6 @@
     <!-- Change for production -->
     <script src="/__/firebase/init.js?useEmulator=true"></script>
 
-    <script src="main.js"></script>
+    <script src="main.js" type="module"></script>
 </body>
 </html>
