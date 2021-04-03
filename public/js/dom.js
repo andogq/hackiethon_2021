@@ -4,6 +4,7 @@ let el = {};
     "container_output",
     "container_signed_in",
     "container_signed_out",
+    "container_alert",
 
     "form_account",
     "form_update_profile",
@@ -29,6 +30,27 @@ const update = {
         let el_description = document.createElement("p");
         el_description.innerText = description;
         el.container_output.appendChild(el_description);
+    },
+    container_alert: function(header, description, callback) {
+        el.container_alert.innerHTML = "";
+
+        let el_header = document.createElement("h3");
+        el_header.innerText = header;
+        el.container_alert.appendChild(el_header);
+
+        let el_description = document.createElement("h3");
+        el_description.innerText = description;
+        el.container_alert.appendChild(el_description);
+
+        let el_button = document.createElement("button");
+        el_button.innerText = "Continue";
+        el_button.addEventListener("click", () => {
+            hide("container_alert");
+            if (callback) callback();
+        });
+        el.container_alert.appendChild(el_button);
+
+        show("container_alert");
     },
     span_name: function(name) {
         el.span_name.innerText = name;

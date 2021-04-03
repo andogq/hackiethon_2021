@@ -1,11 +1,12 @@
 import * as dom from "/js/dom.js";
 
-
 let exercises = [];
 
-// Generates a random exercise from the database
-function random_exercise() {
-    return exercises[Math.floor(Math.random() * exercises.length)];
+function trigger_exercise() {
+    if (exercises.length > 0) {
+        let exercise = exercises[Math.floor(Math.random() * exercises.length)];
+        dom.update.container_output(exercise.name, exercise.description);
+    } else console.error("No exercises loaded");
 }
 
 function update_user_name() {
@@ -19,29 +20,46 @@ function update_user_name() {
 function init() {
     const db = firebase.firestore();
 
-    // Listener for new exercise additions
-    //! Causes problems when page runs before this is ready
-    db.collection("exercises").onSnapshot(snapshot => {
-        exercises = snapshot.docs.map(exercise => exercise.data());
-        console.log("Exercises updated");
-    });
+    let promises = [];
 
+    // Listener for new exercise additions
+    promises.push(new Promise(resolve => {
+        db.collection("exercises").onSnapshot(snapshot => {
+            exercises = snapshot.docs.map(exercise => exercise.data());
+            console.log("Exercises updated");
+
+            resolve();
+        });
+    }));
+
+    // Setup service worker
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register("/sw.js", {scope: "/"}).then(registration => {
+        promises.push(navigator.serviceWorker.register("/sw.js", {scope: "/"}).then(registration => {
             console.log("Service worker registered");
         }).catch(e => {
             console.error(e);
-        });
+        }));
     
         navigator.serviceWorker.addEventListener("message", e => {
             console.log(`Message from service worker: ${JSON.stringify(e.data)}`);
-            if (e.data.command == "trigger_exercise") {
-                let exercise = random_exercise();
-                console.log(exercise)
-                dom.update.container_output(exercise.name, exercise.description);
-            }
+            if (e.data.command == "trigger_exercise") trigger_exercise();
         });
     }
+
+    // Setup notifications
+    promises.push(new Promise(resolve => {
+        if (Notification.permission == "granted") resolve();
+        else {
+            dom.update.container_alert("Notification permissions are required", "In order for us to send you reminders, we need permission to send you notifications.", () => {
+                Notification.requestPermission().then(permission => {
+                    if (permission == "granted") resolve();
+                    else {
+                        console.error("Notifications are required");
+                    }
+                });
+            });
+        }
+    }));
     
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
@@ -104,6 +122,16 @@ function init() {
             });
         }
     });
+
+    return Promise.all(promises);
 }
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", () => {
+    init().then(() => {
+        // All data loaded
+        console.log("All data loaded");
+        if (location.pathname == "/trigger_exercise") {
+            trigger_exercise();
+        }
+    });
+});
