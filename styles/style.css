@@ -3,11 +3,11 @@
 /*********   FONT IMPORTS   **********/
 /*********                  **********/
 /*********                  **********/
-/* @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
 @font-face {
     font-family: "Pendule Ornamental";
-    src: url(fonts/pendule-ornamental.ttf);
-} */
+    src: url(/assets/fonts/pendule-ornamental/pendule-ornamental.ttf);
+}
 
 /*********   FONTS          **********/
 :root {
@@ -18,9 +18,6 @@ html,
 button {
     font-family: var(--mainfont);
     font-size: 3vw;
-}
-h1 {
-    font-family: "Pendule Ornamental"
 }
 
 /*********                  **********/
@@ -45,16 +42,9 @@ html {
 /*********                  **********/
 /*********                  **********/
 :root {
-    /* --paper: rgb(212, 204, 193); */
     --bg: #ffff00;
     --fg: rgb(22, 21, 21);
-    --realbtncolor: white;
-    /* --navy: hsl(243deg, 16%, 35%); */
-    --calcbg: hsl(243deg, 16%, 35%);
-    --solarpanelborder: hsl(243deg, 16%, 35%);
-    --displayscreenborder: hsl(243deg, 16%, 35%);
 }
-
 :root.settings-page {
     --bg: black;
     --fg: rgb(255, 38, 38);
@@ -63,10 +53,6 @@ html {
 :root.darkmode {
     --bg: black;
     --fg: #ffff00;
-    --realbtncolor: rgb(0, 0, 0);
-    --calcbg: rgb(255, 255, 255);
-    --solarpanelborder: rgb(88, 88, 88);
-    --displayscreenborder: rgb(92, 92, 92);
 }
 
 /*********                  **********/
@@ -74,9 +60,10 @@ html {
 /*********   BACKGROUNDS    **********/
 /*********                  **********/
 /*********                  **********/
+
 .div-full-frame {
     position: relative;
-    background-color: var(--bg);
+    background-color: none;
     width: 100vw;
     height: 100vh;
     z-index: 1;
@@ -109,7 +96,7 @@ html {
     border-top-left-radius: 50% 50%;
     border-top-right-radius: 50% 50%;
     font-size: 3.6rem;
-    transition: transform 2s;
+    transition: transform 0.5s;
 }
 .btn-rego:hover {
     transform: scale(3,1);
@@ -145,10 +132,16 @@ html {
 /*********       REGO       **********/
 /*********                  **********/
 /*********                  **********/
+.form-rego {
+    display: flex;
+    flex-direction: column;
+}
 fieldset {
+    padding: 0 0.5rem;
     display: flex;
     flex-direction: column;
     border: 3px solid var(--fg);
+    width: 100%;
 }
 /* TODO: Sretch text horizontally */
 .popup-rego {
@@ -156,12 +149,32 @@ fieldset {
     text-align: justify;
     font-size: 1rem;
     z-index: 1000;
+    border: 0.1rem solid rgb(36, 3, 3);
+    border-radius: 5%;
+    padding: 0.5rem;
     background-color: rgb(255, 28, 28);
     top: 50%;
-    left: 0;
-    width: 100vw;
+    left: 50%;
     height: 30vw;
-    transform: translateY(-50%);
+    transform: translateY(-50%) translateX(-50%);
+    animation: stretch-100vw 7s infinite;
+}
+select, input {
+    height: 1rem;
+    margin: 0.2rem 0;
+}
+.btn-create-profile {
+    margin-bottom: 0.5rem;
+}
+
+@keyframes stretch-100vw {
+    0%, 50%, 100% {
+        width: 96%;
+    }
+    25%, 75% {
+        width: 99%;
+    }
+
 }
 /* SETTINGS PAGE */
 /* SETTINGS PAGE */
@@ -192,4 +205,34 @@ form {
 }
 button:hover {
     cursor: pointer;
+}
+/* CLOCK */
+.div-clock {
+    text-align: center;
+    font-family: "Pendule Ornamental"
+}
+.span-clock {
+    font-family: "Pendule Ornamental";
+}
+
+/* ANIMATIONS */
+.animation-stretch-1 {
+    animation: stretch-1 4s infinite;
+}
+@keyframes stretch-1 {
+    0% {
+        transform: scale(1,1);
+    }
+    50% {
+        transform: scale(3,1);
+    }
+    100% {
+        transform: scale(1,1);
+    }
+
+}
+/* LINKS */
+a {
+    text-decoration: none;
+    color: var(--fg);
 }
