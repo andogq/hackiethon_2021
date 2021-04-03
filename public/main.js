@@ -132,6 +132,8 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("All data loaded");
         if (location.pathname == "/trigger_exercise") {
             trigger_exercise();
+
+            history.replaceState(null, "", "/");
         }
     });
 });
