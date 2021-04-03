@@ -1,7 +1,3 @@
-function log(message) {
-    
-}
-
 function trigger_exercise() {
     self.clients.matchAll({type: "window"}).then(clients => {
         let notified = false;
@@ -42,6 +38,8 @@ self.addEventListener("install", () => {
 // Service worker has been activated and is running
 self.addEventListener("activate", () => {
     commands.log("Service worker activated");
+
+    setInterval(trigger_exercise, 5 * 60 * 1000);
 });
 
 // Service worker receives a message from the web page
