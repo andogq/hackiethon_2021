@@ -3,11 +3,11 @@
 /*********   FONT IMPORTS   **********/
 /*********                  **********/
 /*********                  **********/
-@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
 @font-face {
     font-family: "Pendule Ornamental";
     src: url(fonts/pendule-ornamental.ttf);
-}
+} */
 
 /*********                  **********/
 /*********                  **********/
@@ -21,7 +21,7 @@
 html,
 button {
     font-family: var(--mainfont);
-    font-size: 1vh;
+    font-size: 5vh;
 }
 h1 {
     font-family: "Pendule Ornamental"
@@ -39,7 +39,10 @@ h1 {
        -moz-box-sizing: border-box;
             box-sizing: border-box;
 }
-
+/* SCROLL */
+html {
+    scroll-behavior: smooth;
+}
 /*********                  **********/
 /*********                  **********/
 /*********   COLORS         **********/
@@ -47,9 +50,8 @@ h1 {
 /*********                  **********/
 :root {
     /* --paper: rgb(212, 204, 193); */
-    --bodybg: rgb(212, 204, 193);
-    /* --white: white; */
-    --blkbtncolor: white;
+    --bg: #ffff00;
+    --fg: rgb(22, 21, 21);
     --realbtncolor: white;
     /* --navy: hsl(243deg, 16%, 35%); */
     --calcbg: hsl(243deg, 16%, 35%);
@@ -57,9 +59,9 @@ h1 {
     --displayscreenborder: hsl(243deg, 16%, 35%);
 }
 
-:root.alpha {
-    --bodybg: black;
-    --blkbtncolor: rgb(0, 0, 0);
+:root.darkmode {
+    --bg: black;
+    --fg: #ffff00;
     --realbtncolor: rgb(0, 0, 0);
     --calcbg: rgb(255, 255, 255);
     --solarpanelborder: rgb(88, 88, 88);
@@ -71,53 +73,82 @@ h1 {
 /*********   BACKGROUNDS    **********/
 /*********                  **********/
 /*********                  **********/
-body {
-    background-color: var(--bodybg);
-}
-.plain-buttons-row,
-.black-buttons-row,
-.black-buttons-grid,
-.real-buttons-row,
-.real-buttons-grid {
-    background-color: none;
-}
-
-/*********                  **********/
-/*********                  **********/
-/*********     BUTTONS      **********/
-/*********                  **********/
-/*********                  **********/
-button:hover {
-    opacity: 0.9;
-    cursor: pointer;
-}
-/* button:active {
-    border: none;
-} */
-button:focus {
-    outline: none;
-}
-
-/*********                  **********/
-/*********                  **********/
-/*********       BODY       **********/
-/*********                  **********/
-/*********                  **********/
-body {
+.div-full-frame {
+    position: relative;
+    background-color: var(--bg);
+    width: 100vw;
     height: 100vh;
 }
+.cover {
+    background-color: black;
+    opacity: 80%;
+    z-index: 100;
+    filter: blur(2px);
+}
+
+.section-rego {
+    background: none;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.btn-rego {
+    background: none;
+    width: 100%;
+    height: 30vh;
+    border: 0.5rem solid var(--fg);
+    border-bottom-left-radius: 50% 50%;
+    border-bottom-right-radius: 50% 50%;
+    border-top-left-radius: 50% 50%;
+    border-top-right-radius: 50% 50%;
+
+    font-size: 20vh;
+}
+.stretch {
+    color: red;
+    display: inline-block;
+    transform: scale(3,1);
+}
+.nav-top {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.nav-btm {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.img-gif1 {
+    display: block;
+    height: 100vh;
+    width: 100vw;
+}
+
 
 /*********                  **********/
 /*********                  **********/
-/*********        H1        **********/
+/*********       REGO       **********/
 /*********                  **********/
 /*********                  **********/
-h1 {
-    text-align: center;
-    height: 14vh;
-    line-height: 14vh;
-    font-size: 5rem;
-    color: var(--h1color);
-
-    transition: transform 2s cubic-bezier(.09,1.26,.28,1.06);
+fieldset {
+    display: flex;
+    flex-direction: column;
+    border: 3px solid black;
+}
+/* TODO: Sretch text horizontally */
+.popup-rego {
+    position: fixed;
+    text-align: justify;
+    font-size: 1rem;
+    z-index: 1000;
+    background-color: rgb(255, 28, 28);
+    top: 50%;
+    left: 0;
+    width: 100vw;
+    height: 30vw;
+    transform: translateY(-50%);
 }

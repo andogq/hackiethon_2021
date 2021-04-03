@@ -15,14 +15,14 @@
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:image:alt" content="image description">
 
-	<link href="reset.css" rel="stylesheet">
-	<link href="style.css" rel="stylesheet">
+	<link href="/styles/reset.css" rel="stylesheet">
+	<link href="/styles/style.css" rel="stylesheet">
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body>
     <div class="div-full-frame">
         <section class="section-rego">
-            <button id="rego" class ="btn-rego" type="button" name="rego" value="STREEEECH"><p>STR<span class="stretch">E</span>CH</p>
+            <button id="rego" class ="btn-rego" type="button" name="rego" value="STREEEECH"><p class="p-strech">STR<span class="stretch">E</span>CH</p>
             </button>
         </section>
         <nav class="nav-btm">
@@ -30,7 +30,7 @@
             </a>
         </nav>
     </div>
-    <div class="div-hidden">
+    <div class="div-hidden" hidden>
         <div class="div-full-frame">
             <section class="scroll-gap">
                 scrolling gap.
@@ -106,7 +106,7 @@
     </div>
     <!-- popup rego form w/ position: fixed -->
     <div class="popup-rego" hidden>
-        <form>
+        <form autocomplete="off">
             <fieldset>
                 <legend>REGO</legend>
                 <label for="nickname">Nickname</label>
@@ -116,6 +116,7 @@
                 </select>
                 <label for="email">Email</label>
                 <input id="email" name="email" type="email">
+                <button type="button">STRE___CH</button>
             </fieldset>
         </form>
     </div>
