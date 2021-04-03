@@ -38,10 +38,6 @@ self.addEventListener("install", () => {
 // Service worker has been activated and is running
 self.addEventListener("activate", () => {
     commands.log("Service worker activated");
-
-    setInterval(trigger_exercise, 5 * 60 * 1000);
-
-    commands.notify({title: "Test notification", description: "yeah woo"});
 });
 
 // Service worker receives a message from the web page

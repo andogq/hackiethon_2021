@@ -41,13 +41,13 @@ function init() {
         }));
     
         navigator.serviceWorker.addEventListener("message", e => {
-            console.log(`Message from service worker: ${JSON.stringify(e.data)}`);
             if (e.data.command == "trigger_exercise") trigger_exercise();
         });
     }
 
     // Setup notifications
     promises.push(new Promise(resolve => {
+        // TODO: Make this more robust incase the user rejects the permission
         if (Notification.permission == "granted") resolve();
         else {
             dom.update.container_alert("Notification permissions are required", "In order for us to send you reminders, we need permission to send you notifications.", () => {
@@ -101,6 +101,9 @@ function init() {
     dom.el.button_sign_out.addEventListener("click", () => {
         firebase.auth().signOut().then(() => {
             console.log("Signed out successfully");
+
+            // Reload the page
+            location.reload();
         }).catch(error => {
             console.error(error);
         });
@@ -130,10 +133,22 @@ document.addEventListener("DOMContentLoaded", () => {
     init().then(() => {
         // All data loaded
         console.log("All data loaded");
+
+        // If at /trigger_exercise, trigger an exercise then reset back to root
         if (location.pathname == "/trigger_exercise") {
             trigger_exercise();
 
             history.replaceState(null, "", "/");
         }
+
+        // Begin the timer for the notification
+        setInterval(() => {
+            navigator.serviceWorker.controller.postMessage({
+                command: "notify",
+                parameters: {
+                    title: "Exercise time"
+                }
+            });
+        }, 5 * 60 * 1000);
     });
 });
