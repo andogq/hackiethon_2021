@@ -1,5 +1,6 @@
 {
-    "projects": {
-        "default": "hackiethon-2021"
-    }
+  "projects": {
+    "default": "hackiethon-2021",
+    "production": "hackiethon-2021"
+  }
 }

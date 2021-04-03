@@ -1,4 +1,5 @@
-let db = firebase.firestore();
+const db = firebase.firestore();
+const messaging = firebase.messaging();
 
 let exercises = [];
 
@@ -32,4 +33,18 @@ el.button.addEventListener("click", () => {
     let description = document.createElement("p");
     description.innerText = exercise.description;
     el.output.appendChild(description);
+});
+
+messaging.onMessage(payload => {
+    console.log(`Message received: ${JSON.stringify(payload)}`);
+});
+
+messaging.getToken({vapidKey: "BPNO5pl7BCwPKJX5RqQCCunZx7bpXYikrmC2Cei0aK1ysVAXrphwKDWdlnOkfIyiuUQfaxDiFDRW2F36NzmM3XA"}).then(token => {
+    if (token) {
+        console.log(token);
+    } else {
+        console.error("Something went wrong")
+    }
+}).catch(err => {
+    console.error(err);
 });
