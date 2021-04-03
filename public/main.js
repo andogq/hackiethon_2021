@@ -19,7 +19,7 @@ function update_user_name() {
     let user = firebase.auth().currentUser;
 
     if (user) {
-        dom.el.span_name.innerText = user.displayName || "User";
+        dom.update.span_name(user.displayName || "User");
     }
 }
 
@@ -33,17 +33,8 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.addEventListener("message", e => {
         console.log(`Message from service worker: ${JSON.stringify(e.data)}`);
         if (e.data.command == "trigger_exercise") {
-            dom.el.container_output.innerHTML = "";
-
             let exercise = random_exercise();
-        
-            let header = document.createElement("h3");
-            header.innerText = exercise.name;
-            dom.el.container_output.appendChild(header);
-        
-            let description = document.createElement("p");
-            description.innerText = exercise.description;
-            dom.el.container_output.appendChild(description);
+            dom.update.container_output(exercise.name, exercise.description);
         }
     });
 }
@@ -51,13 +42,61 @@ if ('serviceWorker' in navigator) {
 firebase.auth().onAuthStateChanged(user => {
     if (user) {
         console.log("User signed in");
-        dom.el.container_signed_in.style.display = "";
-        dom.el.container_signed_out.style.display = "none";
+        dom.show("container_signed_in");
+        dom.hide("container_signed_out");
 
         update_user_name();
     } else {
         console.log("User signed out");
-        dom.el.container_signed_in.style.display = "none";
-        dom.el.container_signed_out.style.display = "";
+        dom.show("container_signed_out");
+        dom.hide("container_signed_in");
+    }
+});
+
+// Event listners attached to different elements
+dom.el.button_register.addEventListener("click", () => {
+    let email = dom.el.form_account.elements["email"].value;
+    let password = dom.el.form_account.elements["password"].value;
+
+    firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
+        console.log("Registered and signed in successfully");
+    }).catch(error => {
+        console.error(error);
+    });
+});
+
+dom.el.button_sign_in.addEventListener("click", () => {
+    let email = dom.el.form_account.elements["email"].value;
+    let password = dom.el.form_account.elements["password"].value;
+
+    firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
+        console.log("Signed in successfully");
+    }).catch(error => {
+        console.error(error);
+    });
+});
+
+dom.el.button_sign_out.addEventListener("click", () => {
+    firebase.auth().signOut().then(() => {
+        console.log("Signed out successfully");
+    }).catch(error => {
+        console.error(error);
+    });
+});
+
+dom.el.button_update_profile.addEventListener("click", () => {
+    let name = dom.el.form_update_profile.elements["name"].value;
+
+    // Very bad, fix later
+    let user = firebase.auth().currentUser;
+    if (user) {
+        user.updateProfile({
+            displayName: name
+        }).then(() => {
+            console.log("Update Successful");
+            update_user_name();
+        }).catch(e => {
+            console.error(e);
+        });
     }
 });
