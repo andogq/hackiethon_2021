@@ -1,0 +1,123 @@
+/*********                  **********/
+/*********                  **********/
+/*********   FONT IMPORTS   **********/
+/*********                  **********/
+/*********                  **********/
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+@font-face {
+    font-family: "Pendule Ornamental";
+    src: url(fonts/pendule-ornamental.ttf);
+}
+
+/*********                  **********/
+/*********                  **********/
+/*********   FONTS          **********/
+/*********                  **********/
+/*********                  **********/
+:root {
+    --mainfont: Helvetica, Arial, sans-serif;
+    --secondaryfont: sans-serif;
+}
+html,
+button {
+    font-family: var(--mainfont);
+    font-size: 1vh;
+}
+h1 {
+    font-family: "Pendule Ornamental"
+}
+
+/*********                  **********/
+/*********                  **********/
+/*********   BORDER BOX     **********/
+/*********                  **********/
+/*********                  **********/
+*,
+*::after,
+*::before {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+/*********                  **********/
+/*********                  **********/
+/*********   COLORS         **********/
+/*********                  **********/
+/*********                  **********/
+:root {
+    /* --paper: rgb(212, 204, 193); */
+    --bodybg: rgb(212, 204, 193);
+    /* --white: white; */
+    --blkbtncolor: white;
+    --realbtncolor: white;
+    /* --navy: hsl(243deg, 16%, 35%); */
+    --calcbg: hsl(243deg, 16%, 35%);
+    --solarpanelborder: hsl(243deg, 16%, 35%);
+    --displayscreenborder: hsl(243deg, 16%, 35%);
+}
+
+:root.alpha {
+    --bodybg: black;
+    --blkbtncolor: rgb(0, 0, 0);
+    --realbtncolor: rgb(0, 0, 0);
+    --calcbg: rgb(255, 255, 255);
+    --solarpanelborder: rgb(88, 88, 88);
+    --displayscreenborder: rgb(92, 92, 92);
+}
+
+/*********                  **********/
+/*********                  **********/
+/*********   BACKGROUNDS    **********/
+/*********                  **********/
+/*********                  **********/
+body {
+    background-color: var(--bodybg);
+}
+.plain-buttons-row,
+.black-buttons-row,
+.black-buttons-grid,
+.real-buttons-row,
+.real-buttons-grid {
+    background-color: none;
+}
+
+/*********                  **********/
+/*********                  **********/
+/*********     BUTTONS      **********/
+/*********                  **********/
+/*********                  **********/
+button:hover {
+    opacity: 0.9;
+    cursor: pointer;
+}
+/* button:active {
+    border: none;
+} */
+button:focus {
+    outline: none;
+}
+
+/*********                  **********/
+/*********                  **********/
+/*********       BODY       **********/
+/*********                  **********/
+/*********                  **********/
+body {
+    height: 100vh;
+}
+
+/*********                  **********/
+/*********                  **********/
+/*********        H1        **********/
+/*********                  **********/
+/*********                  **********/
+h1 {
+    text-align: center;
+    height: 14vh;
+    line-height: 14vh;
+    font-size: 5rem;
+    color: var(--h1color);
+
+    transition: transform 2s cubic-bezier(.09,1.26,.28,1.06);
+}
