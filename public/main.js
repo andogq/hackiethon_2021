@@ -61,20 +61,6 @@ function init() {
         }
     }));
     
-    firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-            console.log("User signed in");
-            dom.hide("container_sign_in");
-            dom.show("container_account_manager");
-    
-            update_user_name();
-        } else {
-            console.log("User signed out");
-            dom.show("container_sign_in");
-            dom.hide("container_account_manager");
-        }
-    });
-    
     // Event listners attached to different elements
     dom.el.button_register.addEventListener("click", () => {
         let email = dom.el.form_account_details.elements["email"].value;
@@ -134,21 +120,40 @@ document.addEventListener("DOMContentLoaded", () => {
         // All data loaded
         console.log("All data loaded");
 
-        // If at /trigger_exercise, trigger an exercise then reset back to root
-        if (location.pathname == "/trigger_exercise") {
-            trigger_exercise();
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                console.log("User signed in");
 
-            history.replaceState(null, "", "/");
-        }
+                dom.hide("container_sign_in");
+                dom.show("container_account_manager");
+        
+                update_user_name();
 
-        // Begin the timer for the notification
-        setInterval(() => {
-            navigator.serviceWorker.controller.postMessage({
-                command: "notify",
-                parameters: {
-                    title: "Exercise time"
+                // If at /trigger_exercise, trigger an exercise then reset back to root
+                if (location.pathname == "/trigger_exercise") {
+                    trigger_exercise();
+
+                    history.replaceState(null, "", "/");
                 }
-            });
-        }, 5 * 60 * 1000);
+
+                // Begin the timer for the notification
+                setInterval(() => {
+                    navigator.serviceWorker.controller.postMessage({
+                        command: "notify",
+                        parameters: {
+                            title: "Exercise time"
+                        }
+                    });
+                }, 5 * 60 * 1000);
+            } else {
+                console.log("User signed out");
+
+                dom.show("container_sign_in");
+                dom.hide("container_account_manager");
+
+                // Always redirect back to root if logged out
+                if (location.pathname != "/") history.replaceState(null, "", "/");
+            }
+        });
     });
 });
