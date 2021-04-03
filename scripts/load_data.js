@@ -8,28 +8,38 @@ admin.initializeApp({
 const db = admin.firestore();
 
 const data = {
-    "star_jump": {
-        "name": "Star Jump",
-        "min": 5,
-        "max": 20,
-        "description": "Blah blah blah"
+    "exercises": {
+        "star_jump": {
+            "name": "Star Jump",
+            "min": 5,
+            "max": 20,
+            "description": "Blah blah blah"
+        },
+        "push_up": {
+            "name": "Push Up",
+            "min": 5,
+            "max": 20,
+            "description": "Stuff yeah wow"
+        },
+        "neck_stretch": {
+            "name": "Neck Stretch",
+            "min": 2,
+            "max": 6,
+            "description": "Do a stretch"
+        }
     },
-    "push_up": {
-        "name": "Push Up",
-        "min": 5,
-        "max": 20,
-        "description": "Stuff yeah wow"
-    },
-    "neck_stretch": {
-        "name": "Neck Stretch",
-        "min": 2,
-        "max": 6,
-        "description": "Do a stretch"
+    "users": {
+        "iYNb122kQkYseH6FoKMrB9REnEH2": {
+            "preference_1": true,
+            "more_stuff": [0, 10]
+        }
     }
 }
 
-Object.keys(data).forEach(async (exercise) => {
-    await db.collection("exercises").doc(exercise).set(data[exercise]);
+Object.keys(data).forEach(async d => {
+    Object.keys(data[d]).forEach(async doc => {
+        await db.collection(d).doc(doc).set(data[d][doc]);
+    });
 });
 
 console.log("Exercises added");
