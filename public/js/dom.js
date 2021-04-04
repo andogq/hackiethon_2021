@@ -68,21 +68,27 @@ const update = {
 
         let el_done = document.createElement("button");
         el_done.id = "button_exercise_done";
-        el_done.innerText = "Done";
         el_done.addEventListener("click", () => {
             hide("container_exercise_popup_blur");
             if (doneCallback) doneCallback();
         });
         el_buttons.appendChild(el_done);
 
+        let el_done_img = document.createElement("img");
+        el_done_img.src = "/assets/tick.svg";
+        el_done.appendChild(el_done_img);
+
         let el_skip = document.createElement("button");
         el_skip.id = "button_exercise_skip";
-        el_skip.innerText = "Skip";
         el_skip.addEventListener("click", () => {
             hide("container_exercise_popup_blur");
             if (skipCallback) skipCallback();
         });
         el_buttons.appendChild(el_skip);
+
+        let el_skip_img = document.createElement("img");
+        el_skip_img.src = "/assets/cross.svg";
+        el_skip.appendChild(el_skip_img);
 
         show("container_exercise_popup_blur");
     },

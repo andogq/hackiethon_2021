@@ -161,6 +161,14 @@ body > div {
     justify-content: space-evenly;
 }
 
+#container_exercise_buttons button {
+    border: none;
+}
+
+#container_exercise_buttons img {
+    height: 4rem;
+}
+
 #container_app {
     display: flex;
     flex-direction: column;
@@ -182,6 +190,18 @@ body > div {
 
 #container_header > button {
     padding: 1%;
+}
+
+#button_settings {
+    border: none;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#img_cog {
+    height: 1.5rem;
 }
 
 #container_footer {
