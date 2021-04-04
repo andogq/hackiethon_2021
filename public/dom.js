@@ -177,6 +177,8 @@ const update = {
             streak: 0
         };
 
+        team.sort((a, b) => b.done_today - a.done_today);
+
         team.forEach(member => {
             let el_row = document.createElement("tr");
             el.container_team_statistics.appendChild(el_row);

@@ -457,7 +457,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     start_timer();
 
-                    if (statistics.team_id != "") db.collection("statistics").where("team_id", "==", statistics.team_id).orderBy("done_today", "desc").onSnapshot(snapshot => {
+                    if (statistics.team_id != "") db.collection("statistics").where("team_id", "==", statistics.team_id).onSnapshot(snapshot => {
                         dom.update.container_team_statistics(snapshot.docs.map(doc => doc.data()));
                     });
                 }).catch(console.error);
