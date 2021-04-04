@@ -119,6 +119,8 @@ function start_timer() {
         // Begin the timer for the new notification
         console.log(`Starting timer for ${preferences.notification_interval} mins`);
         if (preferences.notification_interval) notification_timer = setTimeout(() => {
+            trigger_exercise();
+
             // Send the notification
             navigator.serviceWorker.controller.postMessage({
                 command: "notify",
@@ -210,10 +212,6 @@ function init() {
         }).catch(e => {
             console.error(e);
         }));
-    
-        navigator.serviceWorker.addEventListener("message", e => {
-            if (e.data.command == "trigger_exercise") trigger_exercise();
-        });
     }
 
     // Setup notifications
