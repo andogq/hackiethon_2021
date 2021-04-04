@@ -19,6 +19,7 @@ let el = {};
     "button_update_profile",
     "button_sign_out",
     "button_settings",
+    "button_back",
     
     "span_name",
     "text_exercise_timer"

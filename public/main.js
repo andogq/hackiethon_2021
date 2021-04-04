@@ -279,6 +279,9 @@ function init() {
             ]).then(() => {
                 console.log("Update Successful");
                 update_user_name();
+
+                dom.hide("container_settings");
+                dom.show("container_app");
             }).catch(e => {
                 console.error(e);
             });
@@ -288,6 +291,11 @@ function init() {
     dom.el.button_settings.addEventListener("click", () => {
         dom.hide("container_app");
         dom.show("container_settings");
+    });
+
+    dom.el.button_back.addEventListener("click", () => {
+        dom.hide("container_settings");
+        dom.show("container_app");
     });
 
     return Promise.all(promises);
@@ -306,7 +314,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 dom.hide("container_landing");
                 dom.show("container_app");
-                dom.show("container_settings");
         
                 update_user_name();
 
