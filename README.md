@@ -68,8 +68,8 @@ Helper scripts for us during development, for things like initialising the datab
  - [x] Teams
  - [ ] Pretty up notification
  - [x] Add settings page
- - [ ] Working timer on exercise page
- - [ ] Show popup if focused
+ - [x] Working timer on exercise page
+ - [x] Show popup if focused
 
 # Glossary
  - Firebase: A collection of tools and services that allows for applications to be quickly built

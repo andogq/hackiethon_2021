@@ -107,6 +107,8 @@ const update = {
         el_skip.appendChild(el_skip_img);
 
         show("container_exercise_popup_blur");
+
+        return el_timer;
     },
     container_exclude_exercises: function(exercises) {
         el.container_exclude_exercises.innerHTML = "";
