@@ -11,6 +11,9 @@ let el = {};
     "container_exercise_popup",
     "container_exercise_popup_blur",
     "container_user_statistics",
+    "container_notification_days",
+    "container_notification_hours_list",
+    "container_notification_hours_add",
 
     "form_account_details",
     "form_update_profile",
@@ -21,13 +24,17 @@ let el = {};
     "button_sign_out",
     "button_settings",
     "button_back",
+    "button_notification_hours_add",
+    "button_new_team",
     
     "span_name",
 
     "text_user_points",
     "text_user_points_today",
     "text_user_streak",
-    "text_exercise_timer"
+    "text_exercise_timer",
+
+    "input_notification_interval"
 ].forEach(e => {
     el[e] = document.getElementById(e);
 });

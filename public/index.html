@@ -99,39 +99,38 @@
             <label>Notification Days:</label>
             <div id="container_notification_days" class="list">
                 <div>
-                    <input type="checkbox" name="monday" checked/>
+                    <input type="checkbox" name="sunday"/>
+                    <label for="sunday">Sunday</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="monday"/>
                     <label for="monday">Monday</label>
                 </div>
                 <div>
-                    <input type="checkbox" name="tuesday" checked/>
+                    <input type="checkbox" name="tuesday"/>
                     <label for="tuesday">Tuesday</label>
                 </div>
                 <div>
-                    <input type="checkbox" name="wednesday" checked/>
+                    <input type="checkbox" name="wednesday"/>
                     <label for="wednesday">Wednesday</label>
                 </div>
                 <div>
-                    <input type="checkbox" name="thursday" checked/>
+                    <input type="checkbox" name="thursday"/>
                     <label for="thursday">Thursday</label>
                 </div>
                 <div>
-                    <input type="checkbox" name="friday" checked/>
+                    <input type="checkbox" name="friday"/>
                     <label for="friday">Friday</label>
                 </div>
                 <div>
                     <input type="checkbox" name="saturday"/>
                     <label for="saturday">Saturday</label>
                 </div>
-                <div>
-                    <input type="checkbox" name="sunday"/>
-                    <label for="sunday">Sunday</label>
-                </div>
             </div>
 
             <label>Notification Hours:</label>
             <div id="container_notification_hours">
                 <div id="container_notification_hours_list" class="list">
-                    <p>09:00 - 17:00</p>
                 </div>
                 <div id="container_notification_hours_add">
                     <label for="start">Start:</label>
@@ -144,7 +143,7 @@
             </div>
 
             <label for="notification_interval">Notification Interval (mins):</label>
-            <input type="number" name="notification_interval"/>
+            <input type="number" name="notification_interval" id="input_notification_interval"/>
 
             <label>Team Code:</label>
             <div>

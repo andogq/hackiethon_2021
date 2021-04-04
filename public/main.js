@@ -265,25 +265,38 @@ function init() {
     dom.el.button_update_profile.addEventListener("click", () => {
         let name = dom.el.form_update_profile.elements["name"].value;
 
-        let exclude_exercises = [...dom.el.container_exclude_exercises.getElementsByTagName("input")].reduce((excluded, el) => {
-            if (el.checked) {
-                excluded.push(el.name);
-            }
-            return excluded;
-        }, []);
+        let new_preferences = {
+            exclude_exercises: [...dom.el.container_exclude_exercises.getElementsByTagName("input")].reduce((excluded, el) => {
+                if (el.checked) {
+                    excluded.push(el.name);
+                }
+                return excluded;
+            }, []),
+            notification_days: [...dom.el.container_notification_days.getElementsByTagName("input")].reduce((days, day, i) => {
+                if (day.checked) days.push(i);
+                return days;
+            }, []),
+            notification_hours: [...dom.el.container_notification_hours_list.children].map(child => {
+                let [start, end] = child.innerText.split(" - ").map(time => {
+                    let [hours, mins] = time.split(":");
+                    return (Number(hours) * 60 * 60 * 1000) + (Number(mins) * 60 * 1000);
+                });
+                return {start, end};
+            }),
+            notification_interval: Number(dom.el.input_notification_interval.value)
+        }
     
         if (user) {
             Promise.all([
                 user.updateProfile({
                     displayName: name
                 }),
-                db.collection("preferences").doc(user.uid).update({exclude_exercises})
+                db.collection("preferences").doc(user.uid).update(new_preferences)
             ]).then(() => {
                 console.log("Update Successful");
-                update_user_name();
 
-                dom.hide("container_settings");
-                dom.show("container_app");
+                // Refresh page
+                location.reload();
             }).catch(e => {
                 console.error(e);
             });
@@ -298,6 +311,23 @@ function init() {
     dom.el.button_back.addEventListener("click", () => {
         dom.hide("container_settings");
         dom.show("container_app");
+    });
+
+    dom.el.button_notification_hours_add.addEventListener("click", () => {
+        let [el_start, el_end] = dom.el.container_notification_hours_add.getElementsByTagName("input");
+        
+        let start = el_start.value
+        let end = el_end.value;
+
+        if (start != "" && end != "") {
+            let el = document.createElement("p");
+            el.innerText = `${start} - ${end}`;
+            el.addEventListener("click", (e) => {
+                e.target.parentElement.removeChild(e.target);
+            });
+            
+            dom.el.container_notification_hours_list.appendChild(el);
+        }
     });
 
     return Promise.all(promises);
@@ -333,7 +363,34 @@ document.addEventListener("DOMContentLoaded", () => {
                                     excluded: preferences.exclude_exercises.indexOf(exercise) != -1
                                 }
                             });
-                            dom.update.container_exclude_exercises(exercise_preference);                            
+                            dom.update.container_exclude_exercises(exercise_preference);   
+                            
+                            preferences.notification_hours.forEach(period => {
+                                let [start, end] = [period.start, period.end].map(p => {
+                                    let hours = String(Math.floor(p / (60 * 60 * 1000)));
+                                    let mins = String(Math.floor((p % (60 * 60 * 1000)) / (60 * 1000)));
+
+                                    hours = hours.length == 1 ? `0${hours}` : hours;
+                                    mins = mins.length == 1 ? `0${mins}` : mins;
+
+                                    return `${hours}:${mins}`
+                                });
+
+                                let el = document.createElement("p");
+                                el.innerText = `${start} - ${end}`;
+                                el.addEventListener("click", (e) => {
+                                    e.target.parentElement.removeChild(e.target);
+                                });
+                                
+                                dom.el.container_notification_hours_list.appendChild(el);
+                            });
+
+                            let el_day_inputs = [...dom.el.container_notification_days.getElementsByTagName("input")];
+                            preferences.notification_days.forEach(day => {
+                                el_day_inputs[day].checked = true;
+                            });
+
+                            dom.el.input_notification_interval.value = preferences.notification_interval
                         } else console.error("Problem loading user preferences");
                     }),
                     db.collection("statistics").doc(user.uid).get().then(doc => {
