@@ -3,33 +3,54 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="main.css" rel="stylesheet"/>
 </head>
 <body>
-    <div id="container_output"></div>
+    <div id="container_landing">
+        <h1>Stretch</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim sit minus laboriosam blanditiis, ea nostrum, eaque assumenda optio maxime amet rem nulla mollitia incidunt deleniti vitae dolor, fuga illo at.
+        Sed quos exercitationem doloribus itaque ipsum nam eveniet enim laborum, dolorum tenetur debitis corrupti recusandae voluptatum at libero consequuntur fuga. Porro, suscipit! Ducimus, nostrum distinctio? Exercitationem cupiditate molestiae ex at?
+        Harum, cumque, quod numquam, officia similique ab a explicabo iure asperiores quam beatae quidem nam quis nihil! Tenetur quis delectus adipisci, dolores, consequatur ratione impedit qui ad, nesciunt laboriosam officiis.
+        Eum quaerat reprehenderit nisi deleniti tempore iure veritatis reiciendis quibusdam, nobis harum consequatur mollitia quam, dolore et voluptatem totam! Numquam saepe ad amet dolorum minus magni non dolorem neque distinctio.
+        Laborum repellendus quam provident reprehenderit tempora, assumenda ipsam exercitationem similique.</p>
 
-    <div id="container_sign_in">
-        <form id="form_account_details">
-            <input type="text" name="email" placeholder="Email" value="test@test.com"/>
-            <input type="password" name="password" placeholder="Password" value="blahblah"/>
-        </form>
-        <button id="button_register">Register</button>
-        <button id="button_sign_in">Sign In</button>
+        <div id="container_sign_in">
+            <h4>Register or Sign In!</h4>
+
+            <form id="form_account_details">
+                <div>
+                    <label for="email">Email: </label>
+                    <input type="text" name="email" placeholder="Email" value="test@test.com"/>
+                </div>
+                <div>
+                    <label for="password">Password: </label>
+                    <input type="password" name="password" placeholder="Password" value="blahblah"/>
+                </div>
+            </form>
+
+            <button id="button_register">Register</button>
+            <button id="button_sign_in">Sign In</button>
+        </div>
     </div>
 
-    <div id="container_account_manager">
-        <h3>Welcome <span id="span_name"></span></h3>
-        <form id="form_update_profile">
-            <input type="text" name="name" placeholder="Name">
-            <h3>Excluded Exercises:</h3>
-            <div id="container_exclude_exercises">
-
-            </div>
-        </form>
-        <button id="button_update_profile">Update Profile</button>
-        <button id="button_sign_out">Sign Out</button>
+    <div id="container_app" class="hidden">
+        <div id="container_output"></div>
+    
+        <div id="container_account_manager">
+            <h3>Welcome <span id="span_name"></span></h3>
+            <form id="form_update_profile">
+                <input type="text" name="name" placeholder="Name">
+                <h3>Excluded Exercises:</h3>
+                <div id="container_exclude_exercises"></div>
+            </form>
+            <button id="button_update_profile">Update Profile</button>
+            <button id="button_sign_out">Sign Out</button>
+        </div>
     </div>
-
-    <div id="container_alert"></div>
+    
+    <div id="container_alert_blur" class="hidden">
+        <div id="container_alert"></div>
+    </div>
     
     <script src="/__/firebase/8.3.2/firebase-app.js"></script>
     <script src="/__/firebase/8.3.2/firebase-auth.js"></script>

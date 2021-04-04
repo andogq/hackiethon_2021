@@ -1,10 +1,13 @@
 // Elements referenced in the code
 let el = {};
 [
+    "container_landing",
+    "container_app",
     "container_output",
     "container_sign_in",
     "container_account_manager",
     "container_alert",
+    "container_alert_blur",
     "container_exclude_exercises",
 
     "form_account_details",
@@ -35,23 +38,23 @@ const update = {
     container_alert: function(header, description, callback) {
         el.container_alert.innerHTML = "";
 
-        let el_header = document.createElement("h3");
+        let el_header = document.createElement("h4");
         el_header.innerText = header;
         el.container_alert.appendChild(el_header);
 
-        let el_description = document.createElement("h3");
+        let el_description = document.createElement("p");
         el_description.innerText = description;
         el.container_alert.appendChild(el_description);
 
         let el_button = document.createElement("button");
         el_button.innerText = "Continue";
         el_button.addEventListener("click", () => {
-            hide("container_alert");
+            hide("container_alert_blur");
             if (callback) callback();
         });
         el.container_alert.appendChild(el_button);
 
-        show("container_alert");
+        show("container_alert_blur");
     },
     container_exclude_exercises: function(exercises) {
         el.container_exclude_exercises.innerHTML = "";
@@ -75,11 +78,12 @@ const update = {
 }
 
 function show(element) {
-    if (element in el) el[element].style.display = "";
+    console.log(element)
+    if (element in el) el[element].classList.remove("hidden");
 }
 
 function hide(element) {
-    if (element in el) el[element].style.display = "none";
+    if (element in el) el[element].classList.add("hidden");
 }
 
 export {el, update, show, hide};

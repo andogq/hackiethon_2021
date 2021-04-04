@@ -255,6 +255,8 @@ function init() {
         }
     });
 
+    console.log(promises);
+
     return Promise.all(promises);
 }
 
@@ -267,8 +269,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (user) {
                 console.log("User signed in");
 
-                dom.hide("container_sign_in");
-                dom.show("container_account_manager");
+                dom.hide("container_landing");
+                dom.show("container_app");
         
                 update_user_name();
 
@@ -302,8 +304,8 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 console.log("User signed out");
 
-                dom.show("container_sign_in");
-                dom.hide("container_account_manager");
+                dom.show("container_landing");
+                dom.hide("container_app");
 
                 // Always redirect back to root if logged out
                 if (location.pathname != "/") history.replaceState(null, "", "/");
