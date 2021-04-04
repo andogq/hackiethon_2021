@@ -6,6 +6,7 @@ let exercises = {};
 let preferences = {};
 let statistics = {};
 let notification_timer;
+let exercise_timer;
 
 function trigger_exercise() {
     let exercise_names = Object.keys(exercises);
@@ -20,7 +21,7 @@ function trigger_exercise() {
 
         let exercise = exercises[exercise_name];
         
-        dom.update.container_exercise_popup({
+        let timer_el = dom.update.container_exercise_popup({
             name: `${Math.floor(Math.random() * (exercise.max - exercise.min + 1) + exercise.min)} x ${exercise.name}s`,
             description: exercise.description
         },
@@ -33,6 +34,8 @@ function trigger_exercise() {
             dom.update.container_user_statistics(statistics.points, statistics.done_today, statistics.streak);
 
             db.collection("statistics").doc(user.uid).update(statistics);
+
+            if (exercise_timer) clearTimeout(exercise_timer);
         },
         () => {
             console.log("Exercise skipped");
@@ -40,8 +43,40 @@ function trigger_exercise() {
             statistics.skipped_today++;
 
             db.collection("statistics").doc(user.uid).update(statistics);
+
+            if (exercise_timer) clearTimeout(exercise_timer);
+        });
+
+        popup_timer(timer_el, 120, () => {
+            dom.hide("container_exercise_popup_blur");
+
+            console.log("Exercise missed");
+
+            statistics.skipped_today++;
+
+            db.collection("statistics").doc(user.uid).update(statistics);
         });
     } else console.error("No exercises loaded");
+}
+
+function popup_timer(timer_el, time, end_callback) {
+    time--;
+
+    if (time < 0) {
+        exercise_timer = undefined;
+
+        end_callback();
+    } else {
+        let min = String(Math.floor(time / 60));
+        min = min.length == 1 ? `0${min}` : min;
+    
+        let sec = String(time % 60);
+        sec = sec.length == 1 ? `0${sec}` : sec;
+        
+        timer_el.innerText = `${min}:${sec}`;
+
+        exercise_timer = setTimeout(popup_timer, 1000, timer_el, time, end_callback);
+    }
 }
 
 function update_user_name() {
