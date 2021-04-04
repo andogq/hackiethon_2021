@@ -453,8 +453,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     start_timer();
 
-                    if (statistics.team_id != "") db.collection("statistics").where("team_id", "==", statistics.team_id).orderBy("done_today", "desc").get().then(({docs}) => {
-                        dom.update.container_team_statistics(docs.map(doc => doc.data()));
+                    if (statistics.team_id != "") db.collection("statistics").where("team_id", "==", statistics.team_id).orderBy("done_today", "desc").onSnapshot(snapshot => {
+                        dom.update.container_team_statistics(snapshot.docs.map(doc => doc.data()));
                     });
                 }).catch(console.error);
             } else {
