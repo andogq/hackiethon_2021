@@ -10,6 +10,7 @@ let el = {};
     "container_exclude_exercises",
     "container_exercise_popup",
     "container_exercise_popup_blur",
+    "container_user_statistics",
 
     "form_account_details",
     "form_update_profile",
@@ -22,6 +23,10 @@ let el = {};
     "button_back",
     
     "span_name",
+
+    "text_user_points",
+    "text_user_points_today",
+    "text_user_streak",
     "text_exercise_timer"
 ].forEach(e => {
     el[e] = document.getElementById(e);
@@ -113,6 +118,11 @@ const update = {
 
             el.container_exclude_exercises.appendChild(el_container);
         }
+    },
+    container_user_statistics: function(total, today, streak) {
+        el.text_user_points.innerText = total;
+        el.text_user_points_today.innerText = today;
+        el.text_user_streak.innerText = streak;
     },
     span_name: function(name) {
         el.span_name.innerText = name;

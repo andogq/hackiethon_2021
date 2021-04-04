@@ -30,6 +30,8 @@ function trigger_exercise() {
             statistics.points += 1;
             statistics.done_today += 1;
 
+            dom.update.container_user_statistics(statistics.points, statistics.done_today, statistics.streak);
+
             db.collection("statistics").doc(user.uid).update(statistics);
         },
         () => {
@@ -337,6 +339,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     db.collection("statistics").doc(user.uid).get().then(doc => {
                         if (doc.exists) {
                             statistics = doc.data();
+
+                            dom.update.container_user_statistics(statistics.points, statistics.done_today, statistics.streak);
                         } else console.error("Problem loading user statistics");
                     })
                 ]).then(() => {
