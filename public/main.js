@@ -1,13 +1,22 @@
 import * as dom from "/js/dom.js";
 
 let db;
-let exercises = [];
+let exercises = {};
 let preferences = {};
 let notification_timer;
 
 function trigger_exercise() {
-    if (exercises.length > 0) {
-        let exercise = exercises[Math.floor(Math.random() * exercises.length)];
+    let exercise_names = Object.keys(exercises);
+
+    if (exercise_names.length == preferences.exclude_exercise.length && exercise_names > 0) {
+        console.error("All exercises have been excluded");
+    } else if (exercise_names.length > 0) {
+        let exercise_name;
+        do {
+            exercise_name = exercise_names[Math.floor(Math.random() * exercise_names.length)];
+        } while (preferences.exclude_exercise.length > 0 && preferences.exclude_exercise.indexOf(exercise_name) != -1);
+
+        let exercise = exercises[exercise_name];
         dom.update.container_output(exercise.name, exercise.description);
     } else console.error("No exercises loaded");
 }
@@ -44,7 +53,10 @@ function init() {
     // Listener for new exercise additions
     promises.push(new Promise(resolve => {
         db.collection("exercises").onSnapshot(snapshot => {
-            exercises = snapshot.docs.map(exercise => exercise.data());
+            exercises = {};
+            snapshot.docs.forEach(doc => {
+                exercises[doc.id] = doc.data();
+            });
             console.log("Exercises updated");
 
             resolve();
