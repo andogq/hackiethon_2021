@@ -8,13 +8,13 @@ let notification_timer;
 function trigger_exercise() {
     let exercise_names = Object.keys(exercises);
 
-    if (exercise_names.length == preferences.exclude_exercise.length && exercise_names > 0) {
+    if (exercise_names.length == preferences.exclude_exercises.length && exercise_names > 0) {
         console.error("All exercises have been excluded");
     } else if (exercise_names.length > 0) {
         let exercise_name;
         do {
             exercise_name = exercise_names[Math.floor(Math.random() * exercise_names.length)];
-        } while (preferences.exclude_exercise.length > 0 && preferences.exclude_exercise.indexOf(exercise_name) != -1);
+        } while (preferences.exclude_exercises.length > 0 && preferences.exclude_exercises.indexOf(exercise_name) != -1);
 
         let exercise = exercises[exercise_name];
         dom.update.container_output(exercise.name, exercise.description);
@@ -191,7 +191,7 @@ function init() {
                     {start: 16 * 60 * 60 * 1000, end: 17 * 60 * 60 * 1000},
                 ],
                 notification_days: [1, 2, 3, 4, 5],
-                exclude_exercise: [
+                exclude_exercises: [
                     "star_jump"
                 ]
             };
@@ -230,13 +230,23 @@ function init() {
     
     dom.el.button_update_profile.addEventListener("click", () => {
         let name = dom.el.form_update_profile.elements["name"].value;
+
+        let exclude_exercises = [...dom.el.container_exclude_exercises.getElementsByTagName("input")].reduce((excluded, el) => {
+            if (el.checked) {
+                excluded.push(el.name);
+            }
+            return excluded;
+        }, []);
     
         // Very bad, fix later
         let user = firebase.auth().currentUser;
         if (user) {
-            user.updateProfile({
-                displayName: name
-            }).then(() => {
+            Promise.all([
+                user.updateProfile({
+                    displayName: name
+                }),
+                db.collection("users").doc(user.uid).update({exclude_exercises})
+            ]).then(() => {
                 console.log("Update Successful");
                 update_user_name();
             }).catch(e => {
@@ -268,6 +278,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (doc.exists) {
                         preferences = doc.data();
                         console.log("Successfully loaded user preferences");
+
+                        // Populate the update profile form
+                        let exercise_preference = {};
+                        Object.keys(exercises).forEach(exercise => {
+                            exercise_preference[exercise] = {
+                                name: exercises[exercise].name,
+                                excluded: preferences.exclude_exercises.indexOf(exercise) != -1
+                            }
+                        });
+                        dom.update.container_exclude_exercises(exercise_preference);
 
                         start_timer();
                     } else console.error("Problem loading user preferences")

@@ -5,6 +5,7 @@ let el = {};
     "container_sign_in",
     "container_account_manager",
     "container_alert",
+    "container_exclude_exercises",
 
     "form_account_details",
     "form_update_profile",
@@ -51,6 +52,22 @@ const update = {
         el.container_alert.appendChild(el_button);
 
         show("container_alert");
+    },
+    container_exclude_exercises: function(exercises) {
+        el.container_exclude_exercises.innerHTML = "";
+
+        for (let exercise_name of Object.keys(exercises)) {
+            let el_checkbox = document.createElement("input");
+            el_checkbox.type = "checkbox";
+            el_checkbox.name = exercise_name;
+            el_checkbox.checked = exercises[exercise_name].excluded;
+            el.container_exclude_exercises.appendChild(el_checkbox);
+
+            let el_label = document.createElement("label");
+            el_label.for = exercise_name;
+            el_label.innerText = exercises[exercise_name].name;
+            el.container_exclude_exercises.appendChild(el_label);
+        }
     },
     span_name: function(name) {
         el.span_name.innerText = name;
