@@ -36,6 +36,8 @@ function trigger_exercise() {
             db.collection("statistics").doc(user.uid).update(statistics);
 
             if (exercise_timer) clearTimeout(exercise_timer);
+
+            start_timer();
         },
         () => {
             console.log("Exercise skipped");
@@ -45,6 +47,8 @@ function trigger_exercise() {
             db.collection("statistics").doc(user.uid).update(statistics);
 
             if (exercise_timer) clearTimeout(exercise_timer);
+
+            start_timer();
         });
 
         popup_timer(timer_el, 120, () => {
@@ -55,6 +59,8 @@ function trigger_exercise() {
             statistics.skipped_today++;
 
             db.collection("statistics").doc(user.uid).update(statistics);
+
+            start_timer();
         });
     } else console.error("No exercises loaded");
 }
@@ -125,12 +131,10 @@ function start_timer() {
             navigator.serviceWorker.controller.postMessage({
                 command: "notify",
                 parameters: {
-                    title: "Exercise time"
+                    title: "Exercise time",
+                    body: "Return to the tab and complete the exercise, be quick!"
                 }
             });
-
-            // Start the next timer
-            start_timer();
         }, timer_length);
     } else {
         // Timer wasn't allowed, work out when the next one will be

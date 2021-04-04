@@ -66,7 +66,7 @@ Helper scripts for us during development, for things like initialising the datab
  - [x] Notification management
  - [x] Scoreboards
  - [x] Teams
- - [ ] Pretty up notification
+ - [x] Pretty up notification
  - [x] Add settings page
  - [x] Working timer on exercise page
  - [x] Show popup if focused
