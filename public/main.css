@@ -89,8 +89,8 @@ hr {
 body > div {
     position: fixed;
     top: 0;
-    left: 20%;
-    right:20%;
+    left: 0;
+    right: 0;
     bottom: 0;
 }
 
@@ -173,6 +173,8 @@ body > div {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    padding: 0 20%;
 }
 
 #container_app > h5 {
