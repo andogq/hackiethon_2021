@@ -113,6 +113,7 @@ body > div {
 #container_sign_in {
     display: grid;
     grid: repeat(3, auto) / repeat(2, 1fr);
+    grid-gap: 10px;
 }
 
 #container_sign_in > h4 {
