@@ -7,5 +7,8 @@ service cloud.firestore {
         match /preferences/{user_id} {
             allow read, write;
         }
+        match /statistics/{user_id} {
+            allow read, write;
+        }
     }
 }
