@@ -1,4 +1,4 @@
-import * as dom from "/js/dom.js";
+import * as dom from "/dom.js";
 
 let db;
 let user;
