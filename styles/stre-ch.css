@@ -1,0 +1,51 @@
+.stre-ch-page {
+    --bg: black;
+    --fg: #ffff00;
+}
+.div-full-frame {
+    background: var(--bg);
+    color: var(--fg);
+}
+.section-center {
+    display: flex;
+}
+/* Sets the containers height and width */
+.base-timer {
+    position: relative;
+    height: 90vh;
+    width: 90vh;
+    max-width: 90vw;
+}
+
+/* Removes SVG styling that would hide the time label */
+.base-timer__circle {
+fill: none;
+stroke: none;
+}
+
+/* The SVG path that displays the timer's progress */
+.base-timer__path-elapsed {
+stroke-width: 7px;
+stroke: var(--grey);
+}
+.base-timer__label {
+    color: var(--fg);
+    position: absolute;
+    
+    /* Size should match the parent container */
+    height: 90vh;
+    width: 90vh;
+    max-width: 90vw;
+    
+    /* Keep the label aligned to the top */
+    top: 0;
+    
+    /* Create a flexible box that centers content vertically and horizontally */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    /* Sort of an arbitrary number; adjust to your liking */
+    font-size: 2rem;
+}
+

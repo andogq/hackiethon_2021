@@ -1,0 +1,24 @@
+:root.settings-page {
+    --bg: black;
+    --fg: rgb(255, 38, 38);
+}
+.settings-page {
+    --bg: rgb(0, 0, 0);
+    --fg: rgb(223, 0, 0);
+    background: var(--bg);
+    color: var(--fg);
+}
+.section-settings {
+    font-size: 1rem;
+    box-shadow: 0 0 0.5rem 0.1rem var(--grey);
+    border: 1rem solid var(--fg);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 90vw;
+    height: 90vh;
+}
+.div-settings-saving-progress {
+    text-align: center;
+}

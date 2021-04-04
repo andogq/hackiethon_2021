@@ -17,6 +17,7 @@
 
 	<link href="/styles/reset.css" rel="stylesheet">
 	<link href="/styles/style.css" rel="stylesheet">
+	<link href="/styles/settings.css" rel="stylesheet">
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body>
@@ -26,30 +27,42 @@
 			<form>
 				<fieldset>
 					<legend>NOTIFICATIONS</legend>
-					<label>POWER: </label>
-					<input type="checkbox">
-					<label></label>
+					<label for="enable-notif">
+						<button type="button" id="enable-notif" name="enable-notif" class="btn-notif-enable">ENABLE</button>
+					</label>
 				</fieldset>
 				<fieldset>
-					<legend>STR???CH</legend>
-					<label>ENABLE: </label>
-					<label for="exercise1">Exercise 1</label>
-					<input type="checkbox">
-					<label for="exercise2">Exercise 2</label>
-					<input type="checkbox">
-					<label for="exercise3">Exercise 3</label>
-					<input type="checkbox">
-					<label for="exercise4">Exercise 4</label>
-					<input type="checkbox">
-					<label for="exercise5">Exercise 5</label>
-					<input type="checkbox">
+					<legend>STRE-CHS</legend>
+					<label class="container" for="checkbox-neck">NECK
+						<input id="checkbox-neck" name="checkbox-neck" type="checkbox">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container" for="checkbox-shoulders">SHOULDERS
+						<input id="checkbox-shoulders" name="checkbox-shoulders" type="checkbox">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container" for="checkbox-fingers">FINGERS
+						<input id="checkbox-fingers" name="checkbox-fingers" type="checkbox">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container" for="checkbox-legs">LEGS
+						<input id="checkbox-legs" name="checkbox-legs" type="checkbox">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container" for="checkbox-arms">ARMS
+						<input id="checkbox-arms" name="checkbox-arms" type="checkbox">
+						<span class="checkmark"></span>
+					</label>
 				</fieldset>
 				<fieldset>
 					<legend>ME</legend>
-					<label>PICTURE: </label>
-					<a href="#">CHOOSE PICTURE: </a>
-					<label>CHANGE NICK: </label>
-					<input type="text">
+					<label>
+						<input placeholder="current_name" type="text">
+					</label>
+					<label for="change-name">
+						<button id="change-name" name="change-name" class="btn-change-name" type="button">CHANGE NAME</button>
+					</label>
+					
 				</fieldset>
 			</form>
 			<div class="div-settings-saving-progress">
@@ -57,7 +70,23 @@
 			</div>
 		</section>
 	</div>
-	
+	<!-- SOUNDS -->
+    <audio name="AC" src="/sounds/ac.wav"></audio>
+    <audio name="alpha" src="/sounds/pop8.flac"></audio>
+    <audio name="DEL" src="/sounds/pop1.ogg"></audio>
+    <audio name="error" src="/sounds/beep-scifi.wav"></audio>
+    <audio name="fail" src="/sounds/fail.wav"></audio>
+    <audio name="off" src="/sounds/off.wav"></audio>
+    <audio name="off2" src="/sounds/off2.wav"></audio>
+    <audio name="on" src="/sounds/on.wav"></audio>
+    <audio name="on2" src="/sounds/on2.wav"></audio>
+    <audio name="op" src="/sounds/click3.wav"></audio>
+    <audio name="num" src="/sounds/pop8.flac"></audio>
+    <audio name="replay" src="/sounds/pop8.flac"></audio>
+    <audio name="shiftup" src="/sounds/powerup.wav"></audio>
+    <audio name="shiftdn" src="/sounds/lose.wav"></audio>
+    <audio name="spiral" src="/sounds/chime-zeuss.wav"></audio>
+    <audio name="chime" src="/sounds/chime-jgreer.mp3"></audio>
 	<script src="script.js"></script>
 </body>
 </html>
