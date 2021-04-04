@@ -72,12 +72,6 @@ const data = {
             "description": "Amazing!",
             "url": "https://images-prod.healthline.com/hlcmsresource/images/topic_centers/Fitness-Exercise/400x400_Stretches_to_Do_at_Work_Every_Day_Upper_Trap_Stretch.gif"
         }
-    },
-    "users": {
-        "0DKOIuSbNrA2wP6Bkx8eDFAQO13P": {
-            "preference_1": true,
-            "more_stuff": [0, 10]
-        }
     }
 }
 
