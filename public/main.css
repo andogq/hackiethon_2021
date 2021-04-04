@@ -248,7 +248,7 @@ body > div {
     height: 1rem;
 }
 
-#container_user_statistics, #container_team_statistics {
+#container_user_statistics {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -256,7 +256,7 @@ body > div {
     margin: 5%;
 }
 
-#container_user_statistics > div > h4, #container_team_statistics > div > h4 {
+#container_user_statistics > div > h4 {
     color: var(--color_accent);
     text-align: center;
 }

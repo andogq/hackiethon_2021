@@ -46,7 +46,9 @@ function trigger_exercise() {
 
 function update_user_name() {
     if (user) {
-        dom.update.span_name(user.displayName || "user");
+        db.collection("statistics").doc(user.uid).get().then(doc => {
+            dom.update.span_name(doc.data().username);
+        });
     }
 }
 
@@ -220,7 +222,9 @@ function init() {
                 points: 0,
                 done_today: 0,
                 skipped_today: 0,
-                streak: 0
+                streak: 0,
+                team_id: "",
+                username: "Unnamed User"
             }
 
             if (new_user) {
@@ -263,8 +267,6 @@ function init() {
     });
     
     dom.el.button_update_profile.addEventListener("click", () => {
-        let name = dom.el.form_update_profile.elements["name"].value;
-
         let new_preferences = {
             exclude_exercises: [...dom.el.container_exclude_exercises.getElementsByTagName("input")].reduce((excluded, el) => {
                 if (el.checked) {
@@ -285,12 +287,15 @@ function init() {
             }),
             notification_interval: Number(dom.el.input_notification_interval.value)
         }
+
+        let new_statistics = {
+            username: dom.el.form_update_profile.elements["name"].value,
+            team_id: dom.el.input_team_code.value
+        }
     
         if (user) {
             Promise.all([
-                user.updateProfile({
-                    displayName: name
-                }),
+                db.collection("statistics").doc(user.uid).update(new_statistics),
                 db.collection("preferences").doc(user.uid).update(new_preferences)
             ]).then(() => {
                 console.log("Update Successful");
@@ -397,6 +402,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         if (doc.exists) {
                             statistics = doc.data();
 
+                            dom.el.form_update_profile.elements["name"].value = statistics.username;
+                            dom.el.input_team_code.value = statistics.team_id;
+
                             dom.update.container_user_statistics(statistics.points, statistics.done_today, statistics.streak);
                         } else console.error("Problem loading user statistics");
                     })
@@ -411,6 +419,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
 
                     start_timer();
+
+                    if (statistics.team_id != "") db.collection("statistics").where("team_id", "==", statistics.team_id).orderBy("done_today", "desc").get().then(({docs}) => {
+                        dom.update.container_team_statistics(docs.map(doc => doc.data()));
+                    });
                 }).catch(console.error);
             } else {
                 console.log("User signed out");
