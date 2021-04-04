@@ -112,12 +112,21 @@ body > div {
     align-items: center;
 }
 
-#container_alert {
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--color_background_faded);
+}
+
+.popup > div {
     position: absolute;
-    top: 25%;
-    left: 25%;
-    right: 25%;
-    bottom: 25%;
+    top: 20%;
+    left: 20%;
+    right: 20%;
+    bottom: 20%;
 
     padding: 2.5%;
 
@@ -131,13 +140,23 @@ body > div {
     border-radius: 5px;
 }
 
-#container_alert_blur {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--color_background_faded);
+#container_exercise_buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#container_header {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+
+    margin: 2.5%;
+}
+
+#container_header > button {
+    padding: 1%;
 }
 
 .hidden {

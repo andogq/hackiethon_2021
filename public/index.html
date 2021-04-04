@@ -34,22 +34,29 @@
     </div>
 
     <div id="container_app" class="hidden">
-        <div id="container_output"></div>
-    
-        <div id="container_account_manager">
-            <h3>Welcome <span id="span_name"></span></h3>
-            <form id="form_update_profile">
-                <input type="text" name="name" placeholder="Name">
-                <h3>Excluded Exercises:</h3>
-                <div id="container_exclude_exercises"></div>
-            </form>
-            <button id="button_update_profile">Update Profile</button>
-            <button id="button_sign_out">Sign Out</button>
+        <div id="container_header">
+            <h4>Welcome <span id="span_name"></span></h4>
+            <button id="button_settings">Settings</button>
         </div>
+        <div id="container_output"></div>
+    </div>
+
+    <div id="container_settings" class="hidden">
+        <form id="form_update_profile">
+            <input type="text" name="name" placeholder="Name">
+            <h3>Excluded Exercises:</h3>
+            <div id="container_exclude_exercises"></div>
+        </form>
+        <button id="button_update_profile">Update Profile</button>
+        <button id="button_sign_out">Sign Out</button>
     </div>
     
-    <div id="container_alert_blur" class="hidden">
+    <div id="container_alert_blur" class="hidden popup">
         <div id="container_alert"></div>
+    </div>
+
+    <div id="container_exercise_popup_blur" class="hidden popup">
+        <div id="container_exercise_popup"></div>
     </div>
     
     <script src="/__/firebase/8.3.2/firebase-app.js"></script>
