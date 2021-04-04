@@ -1,8 +1,10 @@
 import * as dom from "/js/dom.js";
 
 let db;
+let user;
 let exercises = {};
 let preferences = {};
+let statistics = {};
 let notification_timer;
 
 function trigger_exercise() {
@@ -17,15 +19,32 @@ function trigger_exercise() {
         } while (preferences.exclude_exercises.length > 0 && preferences.exclude_exercises.indexOf(exercise_name) != -1);
 
         let exercise = exercises[exercise_name];
-        dom.update.container_output(exercise.name, exercise.description);
+        
+        dom.update.container_exercise_popup({
+            name: `${Math.floor(Math.random() * (exercise.max - exercise.min + 1) + exercise.min)} x ${exercise.name}s`,
+            description: exercise.description
+        },
+        () => {
+            console.log("Exercise complete");
+
+            statistics.points += 1;
+            statistics.done_today += 1;
+
+            db.collection("statistics").doc(user.uid).update(statistics);
+        },
+        () => {
+            console.log("Exercise skipped");
+
+            statistics.skipped_today++;
+
+            db.collection("statistics").doc(user.uid).update(statistics);
+        });
     } else console.error("No exercises loaded");
 }
 
 function update_user_name() {
-    let user = firebase.auth().currentUser;
-
     if (user) {
-        dom.update.span_name(user.displayName || "User");
+        dom.update.span_name(user.displayName || "user");
     }
 }
 
@@ -179,28 +198,39 @@ function init() {
         let email = dom.el.form_account_details.elements["email"].value;
         let password = dom.el.form_account_details.elements["password"].value;
     
-        firebase.auth().createUserWithEmailAndPassword(email, password).then(({user}) => {
+        firebase.auth().createUserWithEmailAndPassword(email, password).then((credential) => {
             console.log("Registered and signed in successfully");
+
+            let new_user = credential.user;
 
             // Create preferences for that user
             preferences = {
-                notification_interval: 5,
+                notification_interval: 30,
                 notification_hours: [
-                    {start: 9 * 60 * 60 * 1000, end: 11 * 60 * 60 * 1000},
-                    {start: 12 * 60 * 60 * 1000, end: 15 * 60 * 60 * 1000},
-                    {start: 16 * 60 * 60 * 1000, end: 17 * 60 * 60 * 1000},
+                    {start: 9 * 60 * 60 * 1000, end: 15 * 60 * 60 * 1000}
                 ],
                 notification_days: [1, 2, 3, 4, 5],
-                exclude_exercises: [
-                    "star_jump"
-                ]
+                exclude_exercises: []
             };
 
-            if (user) db.collection("users").doc(user.uid).set(preferences).then(() => {
-                console.log("Successfully created user preferences");
-            }).catch(e => {
-                console.error(e);
-            });
+            // Create statistics for that user
+            statistics = {
+                points: 0,
+                done_today: 0,
+                skipped_today: 0,
+                streak: 0
+            }
+
+            if (new_user) {
+                Promise.all([
+                    db.collection("statistics").doc(new_user.uid).set(statistics),
+                    db.collection("preferences").doc(new_user.uid).set(preferences)
+                ]).then(() => {
+                    console.log("Successfully created user preferences and statistics");
+                }).catch(e => {
+                    console.error(e);
+                });
+            }
         }).catch(error => {
             console.error(error);
         });
@@ -221,6 +251,8 @@ function init() {
         firebase.auth().signOut().then(() => {
             console.log("Signed out successfully");
 
+            user = undefined;
+
             // Reload the page
             location.reload();
         }).catch(error => {
@@ -238,14 +270,12 @@ function init() {
             return excluded;
         }, []);
     
-        // Very bad, fix later
-        let user = firebase.auth().currentUser;
         if (user) {
             Promise.all([
                 user.updateProfile({
                     displayName: name
                 }),
-                db.collection("users").doc(user.uid).update({exclude_exercises})
+                db.collection("preferences").doc(user.uid).update({exclude_exercises})
             ]).then(() => {
                 console.log("Update Successful");
                 update_user_name();
@@ -255,8 +285,6 @@ function init() {
         }
     });
 
-    console.log(promises);
-
     return Promise.all(promises);
 }
 
@@ -265,7 +293,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // All data loaded
         console.log("All data loaded");
 
-        firebase.auth().onAuthStateChanged(user => {
+        firebase.auth().onAuthStateChanged(_user => {
+            user = _user;
+
             if (user) {
                 console.log("User signed in");
 
@@ -275,32 +305,39 @@ document.addEventListener("DOMContentLoaded", () => {
                 update_user_name();
 
                 // Load user data
-                let doc_ref = db.collection("users").doc(user.uid);
-                doc_ref.get().then((doc) => {
-                    if (doc.exists) {
-                        preferences = doc.data();
-                        console.log("Successfully loaded user preferences");
+                Promise.all([
+                    db.collection("preferences").doc(user.uid).get().then(doc => {
+                        if (doc.exists) {
+                            preferences = doc.data();
 
-                        // Populate the update profile form
-                        let exercise_preference = {};
-                        Object.keys(exercises).forEach(exercise => {
-                            exercise_preference[exercise] = {
-                                name: exercises[exercise].name,
-                                excluded: preferences.exclude_exercises.indexOf(exercise) != -1
-                            }
-                        });
-                        dom.update.container_exclude_exercises(exercise_preference);
+                            // Populate the update profile form
+                            let exercise_preference = {};
+                            Object.keys(exercises).forEach(exercise => {
+                                exercise_preference[exercise] = {
+                                    name: exercises[exercise].name,
+                                    excluded: preferences.exclude_exercises.indexOf(exercise) != -1
+                                }
+                            });
+                            dom.update.container_exclude_exercises(exercise_preference);                            
+                        } else console.error("Problem loading user preferences");
+                    }),
+                    db.collection("statistics").doc(user.uid).get().then(doc => {
+                        if (doc.exists) {
+                            statistics = doc.data();
+                        } else console.error("Problem loading user statistics");
+                    })
+                ]).then(() => {
+                    console.log("Successfully loaded user preferences and statistics");
 
-                        start_timer();
-                    } else console.error("Problem loading user preferences")
+                    // If at /trigger_exercise, trigger an exercise then reset back to root
+                    if (location.pathname == "/trigger_exercise") {
+                        trigger_exercise();
+
+                        history.replaceState(null, "", "/");
+                    }
+
+                    start_timer();
                 }).catch(console.error);
-
-                // If at /trigger_exercise, trigger an exercise then reset back to root
-                if (location.pathname == "/trigger_exercise") {
-                    trigger_exercise();
-
-                    history.replaceState(null, "", "/");
-                }
             } else {
                 console.log("User signed out");
 

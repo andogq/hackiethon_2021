@@ -66,6 +66,8 @@ Helper scripts for us during development, for things like initialising the datab
  - [x] Notification management
  - [ ] Scoreboards
  - [ ] Teams
+ - [ ] Pretty up notification
+ - [ ] Add settings page
 
 # Glossary
  - Firebase: A collection of tools and services that allows for applications to be quickly built

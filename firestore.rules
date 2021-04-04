@@ -4,7 +4,10 @@ service cloud.firestore {
         match /exercises/{exercise} {
             allow read;
         }
-        match /users/{user_id} {
+        match /preferences/{user_id} {
+            allow read, write;
+        }
+        match /statistics/{user_id} {
             allow read, write;
         }
     }
