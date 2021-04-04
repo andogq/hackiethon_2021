@@ -14,6 +14,7 @@ let el = {};
     "container_notification_days",
     "container_notification_hours_list",
     "container_notification_hours_add",
+    "container_team_statistics",
 
     "form_account_details",
     "form_update_profile",
@@ -34,7 +35,8 @@ let el = {};
     "text_user_streak",
     "text_exercise_timer",
 
-    "input_notification_interval"
+    "input_notification_interval",
+    "input_team_code"
 ].forEach(e => {
     el[e] = document.getElementById(e);
 });
@@ -133,6 +135,62 @@ const update = {
     },
     span_name: function(name) {
         el.span_name.innerText = name;
+    },
+    container_team_statistics: function(team) {
+        el.container_team_statistics.innerHTML = "";
+
+        {
+            // Header row
+            let el_row = document.createElement("tr");
+            el.container_team_statistics.appendChild(el_row);
+
+            ["Member", "Points", "Points Today", "Streak"].forEach(cell => {
+                let el_cell = document.createElement("td");
+                el_cell.innerText = cell;
+                el_row.appendChild(el_cell);
+            });
+        }
+
+        let el_stat_cells = {};
+
+        {
+            // Totals row
+            let el_row = document.createElement("tr");
+            el.container_team_statistics.appendChild(el_row);
+
+            let el_cell = document.createElement("td");
+            el_cell.innerText = "Team Total";
+            el_row.appendChild(el_cell);
+
+            ["points", "done_today", "streak"].forEach(stat => {
+                let el = document.createElement("td");
+                el_row.appendChild(el);
+                el_stat_cells[stat] = el;
+            });
+        }
+
+        let team_stats = {
+            points: 0,
+            done_today: 0,
+            streak: 0
+        };
+
+        team.forEach(member => {
+            let el_row = document.createElement("tr");
+            el.container_team_statistics.appendChild(el_row);
+
+            ["username", "points", "done_today", "streak"].forEach(stat => {
+                let el_cell = document.createElement("td");
+                el_cell.innerText = member[stat];
+                el_row.appendChild(el_cell);
+
+                if (stat != "username") team_stats[stat] += member[stat];
+            });
+        });
+
+        Object.keys(team_stats).forEach(stat => {
+            el_stat_cells[stat].innerText = team_stats[stat];
+        });
     }
 }
 
