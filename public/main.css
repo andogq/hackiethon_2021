@@ -133,7 +133,7 @@ body > div {
 
 #form_update_profile {
     display: grid;
-    grid: auto auto / auto auto;
+    grid: repeat(7, auto) / repeat(2, auto);
 
     align-items: center;
 }
@@ -144,8 +144,8 @@ body > div {
     margin: 1rem;
 }
 
-#container_exclude_exercises {
-    height: 10rem;
+.list {
+    max-height: 5rem;
     overflow-y: scroll;
 }
 
@@ -228,18 +228,25 @@ body > div {
     height: 1.5rem;
 }
 
+#container_notification_hours_list > p {
+    font-size: 0.75rem;
+}
+
 #container_settings_buttons {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
+
+    grid-area: 7 / 1 / 8 / 3;
 }
 
 #container_settings_buttons > button {
     padding: 2%;
+    margin: 2%;
 }
 
 .footer {
-    height: 15%;
+    height: 1rem;
 }
 
 #container_user_statistics, #container_team_statistics {

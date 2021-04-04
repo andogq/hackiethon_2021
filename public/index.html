@@ -25,15 +25,15 @@
                 </div>
             </form>
 
-            <button id="button_register">Register</button>
-            <button id="button_sign_in">Sign In</button>
+            <button type="button" id="button_register">Register</button>
+            <button type="button" id="button_sign_in">Sign In</button>
         </div>
     </div>
 
     <div id="container_app" class="hidden">
         <div id="container_app_header" class="header">
             <h4>Welcome <span id="span_name"></span></h4>
-            <button id="button_settings"><img src="/assets/cog.svg" id="img_cog"></button>
+            <button type="button" id="button_settings"><img src="/assets/cog.svg" id="img_cog"></button>
         </div>
         <h5>User Statistics</h5>
         <div id="container_user_statistics">
@@ -84,19 +84,75 @@
     <div id="container_settings" class="hidden">
         <div id="container_header" class="header">
             <h4>Settings</h4>
-            <button id="button_back"><img src="/assets/back-arrow.svg" id="img_cog"></button>
+            <button type="button" id="button_back"><img src="/assets/back-arrow.svg" id="img_cog"></button>
         </div>
         <form id="form_update_profile">
             <label for="name">Name:</label>
             <input type="text" name="name" placeholder="Name">
 
             <label>Excluded Exercises:</label>
-            <div id="container_exclude_exercises"></div>
+            <div id="container_exclude_exercises" class="list"></div>
+
+            <label>Notification Days:</label>
+            <div id="container_notification_days" class="list">
+                <div>
+                    <input type="checkbox" name="sunday"/>
+                    <label for="sunday">Sunday</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="monday"/>
+                    <label for="monday">Monday</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="tuesday"/>
+                    <label for="tuesday">Tuesday</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="wednesday"/>
+                    <label for="wednesday">Wednesday</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="thursday"/>
+                    <label for="thursday">Thursday</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="friday"/>
+                    <label for="friday">Friday</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="saturday"/>
+                    <label for="saturday">Saturday</label>
+                </div>
+            </div>
+
+            <label>Notification Hours:</label>
+            <div id="container_notification_hours">
+                <div id="container_notification_hours_list" class="list">
+                </div>
+                <div id="container_notification_hours_add">
+                    <label for="start">Start:</label>
+                    <input type="time" name="start"/>
+                    <label for="end">End:</label>
+                    <input type="time" name="end"/>
+                    
+                    <button type="button" id="button_notification_hours_add">Add</button>
+                </div>
+            </div>
+
+            <label for="notification_interval">Notification Interval (mins):</label>
+            <input type="number" name="notification_interval" id="input_notification_interval"/>
+
+            <label>Team Code:</label>
+            <div>
+                <input type="text" name="team_code" placeholder="Team Code"/>
+                <button type="button" id="button_new_team">New Team</button>
+            </div>
+
+            <div id="container_settings_buttons">
+                <button type="button" id="button_sign_out">Sign Out</button>
+                <button type="button" id="button_update_profile">Update Profile</button>
+            </div>
         </form>
-        <div id="container_settings_buttons">
-            <button id="button_sign_out">Sign Out</button>
-            <button id="button_update_profile">Update Profile</button>
-        </div>
         <div class="footer"></div>
     </div>
     
