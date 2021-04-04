@@ -17,7 +17,17 @@ function trigger_exercise() {
         } while (preferences.exclude_exercises.length > 0 && preferences.exclude_exercises.indexOf(exercise_name) != -1);
 
         let exercise = exercises[exercise_name];
-        dom.update.container_output(exercise.name, exercise.description);
+        
+        dom.update.container_exercise_popup({
+            name: `${Math.floor(Math.random() * (exercise.max - exercise.min + 1) + exercise.min)} x ${exercise.name}s`,
+            description: exercise.description
+        },
+        () => {
+            console.log("Exercise complete");
+        },
+        () => {
+            console.log("Exercise skipped");
+        });
     } else console.error("No exercises loaded");
 }
 
@@ -184,19 +194,15 @@ function init() {
 
             // Create preferences for that user
             preferences = {
-                notification_interval: 5,
+                notification_interval: 30,
                 notification_hours: [
-                    {start: 9 * 60 * 60 * 1000, end: 11 * 60 * 60 * 1000},
-                    {start: 12 * 60 * 60 * 1000, end: 15 * 60 * 60 * 1000},
-                    {start: 16 * 60 * 60 * 1000, end: 17 * 60 * 60 * 1000},
+                    {start: 9 * 60 * 60 * 1000, end: 15 * 60 * 60 * 1000}
                 ],
                 notification_days: [1, 2, 3, 4, 5],
-                exclude_exercises: [
-                    "star_jump"
-                ]
+                exclude_exercises: []
             };
 
-            if (user) db.collection("users").doc(user.uid).set(preferences).then(() => {
+            if (user) db.collection("preferences").doc(user.uid).set(preferences).then(() => {
                 console.log("Successfully created user preferences");
             }).catch(e => {
                 console.error(e);
@@ -245,7 +251,7 @@ function init() {
                 user.updateProfile({
                     displayName: name
                 }),
-                db.collection("users").doc(user.uid).update({exclude_exercises})
+                db.collection("preferences").doc(user.uid).update({exclude_exercises})
             ]).then(() => {
                 console.log("Update Successful");
                 update_user_name();
@@ -254,8 +260,6 @@ function init() {
             });
         }
     });
-
-    console.log(promises);
 
     return Promise.all(promises);
 }
@@ -275,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 update_user_name();
 
                 // Load user data
-                let doc_ref = db.collection("users").doc(user.uid);
+                let doc_ref = db.collection("preferences").doc(user.uid);
                 doc_ref.get().then((doc) => {
                     if (doc.exists) {
                         preferences = doc.data();
@@ -291,16 +295,16 @@ document.addEventListener("DOMContentLoaded", () => {
                         });
                         dom.update.container_exclude_exercises(exercise_preference);
 
+                        // If at /trigger_exercise, trigger an exercise then reset back to root
+                        if (location.pathname == "/trigger_exercise") {
+                            trigger_exercise();
+
+                            history.replaceState(null, "", "/");
+                        }
+
                         start_timer();
                     } else console.error("Problem loading user preferences")
                 }).catch(console.error);
-
-                // If at /trigger_exercise, trigger an exercise then reset back to root
-                if (location.pathname == "/trigger_exercise") {
-                    trigger_exercise();
-
-                    history.replaceState(null, "", "/");
-                }
             } else {
                 console.log("User signed out");
 

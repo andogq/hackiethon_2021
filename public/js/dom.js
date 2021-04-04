@@ -3,7 +3,6 @@ let el = {};
 [
     "container_landing",
     "container_app",
-    "container_output",
     "container_sign_in",
     "container_settings",
     "container_alert",
@@ -27,17 +26,6 @@ let el = {};
 });
 
 const update = {
-    container_output: function(header, description) {
-        el.container_output.innerHTML = "";
-
-        let el_header = document.createElement("h3");
-        el_header.innerText = header;
-        el.container_output.appendChild(el_header);
-    
-        let el_description = document.createElement("p");
-        el_description.innerText = description;
-        el.container_output.appendChild(el_description);
-    },
     container_alert: function(header, description, callback) {
         el.container_alert.innerHTML = "";
 
@@ -83,7 +71,7 @@ const update = {
         el_done.innerText = "Done";
         el_done.addEventListener("click", () => {
             hide("container_exercise_popup_blur");
-            doneCallback();
+            if (doneCallback) doneCallback();
         });
         el_buttons.appendChild(el_done);
 
@@ -92,7 +80,7 @@ const update = {
         el_skip.innerText = "Skip";
         el_skip.addEventListener("click", () => {
             hide("container_exercise_popup_blur");
-            skipCallback();
+            if (skipCallback) skipCallback();
         });
         el_buttons.appendChild(el_skip);
 
@@ -120,7 +108,6 @@ const update = {
 }
 
 function show(element) {
-    console.log(element)
     if (element in el) el[element].classList.remove("hidden");
 }
 
