@@ -34,7 +34,7 @@
     </div>
 
     <div id="container_app" class="hidden">
-        <div id="container_header">
+        <div id="container_app_header" class="header">
             <h4>Welcome <span id="span_name"></span></h4>
             <button id="button_settings"><img src="/assets/cog.svg" id="img_cog"></button>
         </div>
@@ -81,17 +81,26 @@
                 <td>6</td>
             </tr>
         </table>
-        <div id="container_footer"></div>
+        <div class="footer"></div>
     </div>
 
     <div id="container_settings" class="hidden">
+        <div id="container_header" class="header">
+            <h4>Settings</h4>
+            <button id="button_back"><img src="/assets/back-arrow.svg" id="img_cog"></button>
+        </div>
         <form id="form_update_profile">
+            <label for="name">Name:</label>
             <input type="text" name="name" placeholder="Name">
-            <h3>Excluded Exercises:</h3>
+
+            <label>Excluded Exercises:</label>
             <div id="container_exclude_exercises"></div>
         </form>
-        <button id="button_update_profile">Update Profile</button>
-        <button id="button_sign_out">Sign Out</button>
+        <div id="container_settings_buttons">
+            <button id="button_update_profile">Update Profile</button>
+            <button id="button_sign_out">Sign Out</button>
+        </div>
+        <div class="footer"></div>
     </div>
     
     <div id="container_alert_blur" class="hidden popup">

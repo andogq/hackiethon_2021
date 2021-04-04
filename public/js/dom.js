@@ -18,6 +18,7 @@ let el = {};
     "button_sign_in",
     "button_update_profile",
     "button_sign_out",
+    "button_settings",
     
     "span_name",
     "text_exercise_timer"
@@ -96,16 +97,20 @@ const update = {
         el.container_exclude_exercises.innerHTML = "";
 
         for (let exercise_name of Object.keys(exercises)) {
+            let el_container = document.createElement("div");
+
             let el_checkbox = document.createElement("input");
             el_checkbox.type = "checkbox";
             el_checkbox.name = exercise_name;
             el_checkbox.checked = exercises[exercise_name].excluded;
-            el.container_exclude_exercises.appendChild(el_checkbox);
+            el_container.appendChild(el_checkbox);
 
             let el_label = document.createElement("label");
             el_label.for = exercise_name;
             el_label.innerText = exercises[exercise_name].name;
-            el.container_exclude_exercises.appendChild(el_label);
+            el_container.appendChild(el_label);
+
+            el.container_exclude_exercises.appendChild(el_container);
         }
     },
     span_name: function(name) {

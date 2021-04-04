@@ -285,6 +285,11 @@ function init() {
         }
     });
 
+    dom.el.button_settings.addEventListener("click", () => {
+        dom.hide("container_app");
+        dom.show("container_settings");
+    });
+
     return Promise.all(promises);
 }
 
@@ -301,6 +306,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 dom.hide("container_landing");
                 dom.show("container_app");
+                dom.show("container_settings");
         
                 update_user_name();
 

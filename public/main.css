@@ -72,8 +72,11 @@ input, button {
     transition: 0.5s border;
 }
 
-input:focus, button:focus, input:hover, button:hover {
+input:focus, button:focus {
     outline: none;
+}
+
+input:focus, input:hover, button:hover {
     border: 2px solid var(--color_accent);
 }
 
@@ -127,6 +130,24 @@ body > div {
     align-items: center;
 }
 
+#form_update_profile {
+    display: grid;
+    grid: auto auto / auto auto;
+
+    align-items: center;
+}
+#form_update_profile > label {
+    text-align: right;
+}
+#form_update_profile > * {
+    margin: 1rem;
+}
+
+#container_exclude_exercises {
+    height: 10rem;
+    overflow-y: scroll;
+}
+
 .popup {
     position: fixed;
     top: 0;
@@ -169,7 +190,7 @@ body > div {
     height: 4rem;
 }
 
-#container_app {
+#container_app, #container_settings {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -181,7 +202,7 @@ body > div {
     text-align: center;
 }
 
-#container_header {
+.header {
     display: flex;
     flex-direction: row;
 
@@ -190,11 +211,11 @@ body > div {
     margin: 2.5%;
 }
 
-#container_header > button {
+.header > button {
     padding: 1%;
 }
 
-#button_settings {
+#button_settings, #button_back {
     border: none;
 
     display: flex;
@@ -206,7 +227,17 @@ body > div {
     height: 1.5rem;
 }
 
-#container_footer {
+#container_settings_buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#container_settings_buttons > button {
+    padding: 2%;
+}
+
+.footer {
     height: 15%;
 }
 
